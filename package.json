@@ -1,0 +1,67 @@
+{
+  "name": "pic4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-animate": "^1.5.5",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.5.2",
+    "babel-polyfill": "^6.5.0",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-register": "^6.5.2",
+    "babelify": "^7.2.0",
+    "body-parser": "^1.12.4",
+    "browserify": "^13.0.0",
+    "browserify-shim": "^3.8.12",
+    "cssnext": "^1.8.4",
+    "del": "^2.2.0",
+    "ejs": "^2.3.1",
+    "express": "^4.12.4",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-minify-html": "^1.0.6",
+    "gulp-ng-html2js": "^0.2.2",
+    "gulp-plumber": "^1.1.0",
+    "gulp-postcss": "^6.1.0",
+    "gulp-rev": "^7.0.0",
+    "gulp-uglify": "^1.5.3",
+    "imagesloaded": "^4.1.0",
+    "lodash": "^4.6.1",
+    "mongojs": "^1.3.0",
+    "nconf": "^0.8.4",
+    "postcss-import": "^8.0.2",
+    "raphael": "^2.1.4",
+    "require": "^2.4.18",
+    "restangular": "^1.5.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "browser": {
+    "angular": "./node_modules/angular/angular.min.js"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim",
+      [
+        "babelify",
+        {
+          "ignore": "node_modules"
+        }
+      ]
+    ]
+  },
+  "browserify-shim": {
+    "angular": {
+      "exports": "angular"
+    }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node app.js",
+    "bundle": "gulp bundle",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dean Slama",
+  "license": "ISC"
+}

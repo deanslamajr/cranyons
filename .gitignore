@@ -1,0 +1,14 @@
+# built application
+public
+
+# Dependency directory
+node_modules
+
+# cache-busting build filename mappings
+rev-manifest.json
+
+# environment variable
+config/environment.json
+
+# project management
+stuph

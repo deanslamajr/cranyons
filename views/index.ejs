@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" href="/css/<%- assetHash("app.css") %>">
+  <script>
+    window.appData = {
+      basic: JSON.parse('<%- basic %>'),
+      init: JSON.parse('<%- JSON.stringify(init) %>'),
+      picDomain: '<%- picDomain %>',
+      notFoundCranyonID: '<%- notFoundCranyonID %>'
+    };
+  </script>  
+</head>
+<body>
+  <pf-builder></pf-builder>
+  <pf-menu></pf-menu>
+  <script src="/js/<%- assetHash("app.js") %>"></script>
+  <script src='/js/<%- assetHash("template-cache.min.js") %>'></script>
+</body>
+</html>
