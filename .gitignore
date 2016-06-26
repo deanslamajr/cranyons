@@ -1,8 +1,9 @@
 # built application
 public
 
-# Dependency directory
+# npm stuff
 node_modules
+npm-debug.log
 
 # cache-busting build filename mappings
 rev-manifest.json
