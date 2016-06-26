@@ -6,5 +6,6 @@
   "MONGO_COLLECTION": "<mongoDB collection name>",
   "pic_domain": "<absolute url of asset storage(pics)>",
   "initial_cranyon": "<id of initial cranyon>",
-  "notFoundCranyonID": "<id of 404 cranyon>"
+  "notFoundCranyonID": "<id of 404 cranyon>",
+  "systemErrorID": "<id of 500 cranyon>"
 }

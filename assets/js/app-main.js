@@ -32,19 +32,19 @@ const main = function($rootScope, $window, Cranyons) {
   $window.onerror = event => {
     console.log('uncaught exception');
 
-    const notFoundID = $window.appData.notFoundCranyonID;
+    const systemErrorID = $window.appData.systemErrorID;
 
     // don't hit the API twice for 5xx cranyon meta data
-    if (Cranyons.hasAlreadySeenThis(notFoundID)) {
-      const cranyonUpNextCtrl = Cranyons.cranyonHistory.get(notFoundID);
+    if (Cranyons.hasAlreadySeenThis(systemErrorID)) {
+      const cranyonUpNextCtrl = Cranyons.cranyonHistory.get(systemErrorID);
       cranyonUpNextCtrl.imageLoaded();
     }
     else {
-      Cranyons.fetch(notFoundID);
+      Cranyons.fetch(systemErrorID);
     }
 
     // update the browser history state with this state
-    $window.history.pushState({id: notFoundID}, '', '/5xx');
+    $window.history.pushState({id: systemErrorID}, '', '/5xx');
   };
 }
 

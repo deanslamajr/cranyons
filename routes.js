@@ -13,6 +13,7 @@ mongoCollection.push(collection);
 var db = mongojs(mongoLoginString, mongoCollection, {authMechanism: 'ScramSHA1'});
 
 var notFoundCranyonID = envConfig.get('notFoundCranyonID');
+var systemErrorID     = envConfig.get('systemErrorID');
 
 router.get('/', function(req, res) {
   var initialCranyon = envConfig.get('initial_cranyon');
@@ -21,7 +22,8 @@ router.get('/', function(req, res) {
     basic: true,
     init: initialCranyon,
     picDomain: picDomain,
-    notFoundCranyonID: notFoundCranyonID
+    notFoundCranyonID: notFoundCranyonID,
+    systemErrorID: systemErrorID
   }
   res.append('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.render('index', renderObject);
@@ -56,7 +58,8 @@ router.get('/:url', function(req, res) {
       basic: false,
       init: mongoDoc,
       picDomain: picDomain,
-      notFoundCranyonID: notFoundCranyonID
+      notFoundCranyonID: notFoundCranyonID,
+      systemErrorID: systemErrorID
     }
     res.append('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.render('index', renderObject);
@@ -68,7 +71,8 @@ router.get('/:url', function(req, res) {
       basic: true,
       init: notFoundCranyonID,
       picDomain: picDomain,
-      notFoundCranyonID: notFoundCranyonID
+      notFoundCranyonID: notFoundCranyonID,
+      systemErrorID: systemErrorID
     };
     res.status(404);
     res.render('index', renderObject);
