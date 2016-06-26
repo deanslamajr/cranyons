@@ -13,3 +13,7 @@ config/environment.json
 
 # project management
 stuph
+
+# sublime text
+*.sublime-project
+*.sublime-workspace

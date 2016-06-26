@@ -100,30 +100,33 @@ class CranyonService {
   }
 
   hasAlreadySeenThis(id) {
-    return this.cranyonHistory.get(id) ? true : false;
+    return !!this.cranyonHistory.get(id);
   }
 
-  clickableClicked(clickableID, inactivateFormer, currentCranyon) {
+  clickableClicked(clickableID, currentCranyon) {
     // deliberatly throw exception
     currentCranyon.taco.burrito = 'chalupa';
 
     const cranyonUpNext = this.futureCranyons.get(currentCranyon.id).get(clickableID);
 
     this.window.history.pushState({id: cranyonUpNext.id}, '', '/' + cranyonUpNext.url);
-    // haven't been to this cranyon yet
-    if (!this.hasAlreadySeenThis(cranyonUpNext.id)) {
-      cranyonUpNext.inactivateFormer = inactivateFormer;
-      this.add(cranyonUpNext);
-      this.fetchChildren(cranyonUpNext);
-    } 
     // already been to this cranyon
-    else {
-      this.setBackgroundImage(this.picDomain + cranyonUpNext.image);
+    if (this.hasAlreadySeenThis(cranyonUpNext.id)) {
       const cranyonUpNextCtrl = this.cranyonHistory.get(cranyonUpNext.id);
-      cranyonUpNextCtrl.cranyon.inactivateFormer = inactivateFormer;
       cranyonUpNextCtrl.imageLoaded();
     }
-    this.documentActiveCranyon(cranyonUpNext.id);
+    // haven't been to this cranyon yet
+    else {
+      this.add(cranyonUpNext);
+      this.fetchChildren(cranyonUpNext);
+    }
+  }
+
+  inactivateCurrent() {
+    const currentActiveCtrl = this.cranyonHistory.get(this.activeCranyon);
+    if (currentActiveCtrl) {
+      currentActiveCtrl.setIsActive(false);
+    }
   }
 
   setBackgroundImage(imageSrc) {
@@ -159,14 +162,6 @@ class CranyonService {
 
   isLoading(loading) {
     this.loading = loading;
-  }
-
-  setVisited404(hasVisited) {
-    this.visited404 = hasVisited;
-  }
-
-  hasVisited404() {
-    return this.visited404;
   }
 }
 

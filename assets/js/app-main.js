@@ -7,15 +7,12 @@ const main = function($rootScope, $window, Cranyons) {
     Cranyons.fetch(init);
     // update the browser history state with this state
     $window.history.replaceState({id: init}, '', ''); 
-    // tell cranyon service this cranyon is the active one
-    Cranyons.documentActiveCranyon(init);
   }
   else {
     Cranyons.add(init);
     // update the browser history state with this state
     $window.history.replaceState({id: init.id}, '', '');
     // tell cranyon service this cranyon is the active one
-    Cranyons.documentActiveCranyon(init.id);
     Cranyons.fetchChildren(init);
   }
 
@@ -37,11 +34,17 @@ const main = function($rootScope, $window, Cranyons) {
 
     const notFoundID = $window.appData.notFoundCranyonID;
 
-    Cranyons.fetch(notFoundID);
+    // don't hit the API twice for 5xx cranyon meta data
+    if (Cranyons.hasAlreadySeenThis(notFoundID)) {
+      const cranyonUpNextCtrl = Cranyons.cranyonHistory.get(notFoundID);
+      cranyonUpNextCtrl.imageLoaded();
+    }
+    else {
+      Cranyons.fetch(notFoundID);
+    }
+
     // update the browser history state with this state
-    $window.history.replaceState({id: notFoundID}, '', ''); 
-    // tell cranyon service this cranyon is the active one
-    Cranyons.documentActiveCranyon(notFoundID);
+    $window.history.pushState({id: notFoundID}, '', '/5xx');
   };
 }
 

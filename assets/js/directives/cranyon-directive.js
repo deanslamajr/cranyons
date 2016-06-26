@@ -43,9 +43,8 @@ class CranyonCtrl {
   }
 
   imageLoaded() {
-    if (this.cranyon.inactivateFormer) {
-      this.cranyon.inactivateFormer();
-    }
+    this.CranyonService.inactivateCurrent.call(this.CranyonService);
+    this.CranyonService.documentActiveCranyon.call(this.CranyonService, this.cranyon.id);
 
     this.setPageTitleToName();
 
@@ -59,25 +58,19 @@ class CranyonCtrl {
     const cranService = this.CranyonService;
     const notFoundCranyonID = this.window.appData.notFoundCranyonID;
     
-    if (this.cranyon.inactivateFormer) {
-      this.cranyon.inactivateFormer();
-    }
+    cranService.inactivateCurrent.call(cranService);
 
     this.window.history.replaceState({id: notFoundCranyonID}, '', '/404');
 
     // have we loaded the 404 page before?
-    if (cranService.hasVisited404()) {
+    if (cranService.hasAlreadySeenThis(notFoundCranyonID)) {
       const notFoundCranyonCtrl = cranService.cranyonHistory.get(notFoundCranyonID);
-      cranService.setBackgroundImage(cranService.picDomain + notFoundCranyonCtrl.cranyon.image);
       notFoundCranyonCtrl.imageLoaded();
     }
     else {
       cranService.fetch(notFoundCranyonID);
-      cranService.setVisited404(true);
     }
 
-    // tell cranyon service 404 cranyon is the active one
-    cranService.documentActiveCranyon(notFoundCranyonID);
     // Remove this broken cranyon from the app history
     cranService.forget(this.cranyon.id);
   }
@@ -130,10 +123,8 @@ class CranyonCtrl {
     this.CranyonService.isLoading(true);
     this.scope.$apply();
 
-    const inactivateCranyon = this.setIsActive.bind(this, false);
-
     this.clearClickables();
-    this.CranyonService.clickableClicked.call(this.CranyonService, id, inactivateCranyon, this.cranyon);
+    this.CranyonService.clickableClicked.call(this.CranyonService, id, this.cranyon);
     this.scope.$apply();
   }
 
@@ -177,7 +168,7 @@ function link(scope, element, attributes, CranyonCtrl) {
     CranyonCtrl.windowRatio = CranyonCtrl.computeWindowRatio();
     setImgStyle();
     if (CranyonCtrl.isActive) {
-      CranyonCtrl.cranyonImageLoaded();
+      CranyonCtrl.imageLoaded();
     }
   })
 
