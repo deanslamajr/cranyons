@@ -37,25 +37,6 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
-  "browser": {
-    "angular": "./node_modules/angular/angular.min.js"
-  },
-  "browserify": {
-    "transform": [
-      "browserify-shim",
-      [
-        "babelify",
-        {
-          "ignore": "node_modules"
-        }
-      ]
-    ]
-  },
-  "browserify-shim": {
-    "angular": {
-      "exports": "angular"
-    }
-  },
   "devDependencies": {
     "babel-core": "^6.10.4",
     "babel-eslint": "^6.1.0",
@@ -64,7 +45,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "eslint": "^2.13.1",
     "html-webpack-plugin": "^2.21.0",
-    "ngtemplate-loader": "^1.3.1",
+    "ng-cache-loader": "0.0.16",
     "rimraf": "^2.5.2",
     "webpack": "^1.13.1"
   },
@@ -73,8 +54,7 @@
     "bundle": "gulp bundle",
     "webpack": "npm run clean & webpack",
     "clean": "npm run rimraf -- public",
-    "rimraf": "rimraf",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "rimraf": "rimraf"
   },
   "author": "Dean Slama",
   "license": "ISC"

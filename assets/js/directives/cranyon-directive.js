@@ -8,6 +8,8 @@
 import angular from 'angular';
 import Raphael from 'raphael';
 
+import cranyonTemplate from '../../templates/cranyon-directive.html';
+
 /**
  * Directive controller
  * @class
@@ -190,7 +192,7 @@ function Cranyon() {
     },
     link: link,
     restrict: 'E',
-    templateUrl: 'templates/cranyon-directive.html'
+    template: cranyonTemplate
   };
 }
 

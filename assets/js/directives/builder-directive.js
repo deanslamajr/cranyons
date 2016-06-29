@@ -5,6 +5,8 @@
 
 'use strict';
 
+import builderTemplate from '../../templates/builder-directive.html';
+
 /**
  * Directive controller
  * @class
@@ -29,7 +31,7 @@ function Builder() {
     controllerAs: 'builder',
     replace: true,
     restrict: 'E',
-    templateUrl: 'templates/builder-directive.html'
+    template: builderTemplate
   };
 }
 

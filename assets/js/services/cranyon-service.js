@@ -104,9 +104,6 @@ class CranyonService {
   }
 
   clickableClicked(clickableID, currentCranyon) {
-    // deliberatly throw exception
-    currentCranyon.taco.burrito = 'chalupa';
-
     const cranyonUpNext = this.futureCranyons.get(currentCranyon.id).get(clickableID);
 
     this.window.history.pushState({id: cranyonUpNext.id}, '', '/' + cranyonUpNext.url);

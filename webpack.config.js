@@ -1,4 +1,5 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin  = require('html-webpack-plugin');
+const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 
 const envConfig = require('./environment-config');
 
@@ -18,27 +19,45 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 });
 
 module.exports = {
-  entry: [
-    './assets/js/app.js'
-  ],
+  entry: {
+    app: [
+      './assets/js/app.js'
+    ],
+    vendor: [
+      'angular',
+      'lodash',
+      'restangular',
+      'angular-animate',
+      'raphael',
+      'imagesloaded'
+    ]
+  },
 
   module: {
     loaders: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel'
       },
       {
         test: /\.html$/,
-        loader: 'ngtemplate!html'
+        loader: 'ng-cache'
       }
     ]
   },
 
   output: {
-    filename: '[hash].js',
+    filename: '[name]-[hash].js',
     path: __dirname + '/public/js'
   },
-  plugins: [HTMLWebpackPluginConfig]
+  plugins: [
+    new CommonsChunkPlugin({
+      name: 'vendor',
+      filename: '[name]-[hash].js',
+      minChunks: Infinity
+    }),
+
+    HTMLWebpackPluginConfig
+  ]
 }

@@ -5,6 +5,8 @@
 
 'use strict';
 
+import menuTemplate from '../../templates/menu-directive.html';
+
 /**
  * Directive controller
  * @class
@@ -40,7 +42,7 @@ function Menu() {
     controllerAs: 'menu',
     replace: true,
     restrict: 'E',
-    templateUrl: 'templates/menu-directive.html'
+    template: menuTemplate
   };
 }
 
