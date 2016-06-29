@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <script>
+    window.appData = {
+      basic: JSON.parse('<%= htmlWebpackPlugin.options.init.basic %>'),
+      init: '<%= htmlWebpackPlugin.options.init.init %>',
+      picDomain: '<%= htmlWebpackPlugin.options.init.picDomain %>',
+      notFoundCranyonID: '<%= htmlWebpackPlugin.options.init.notFoundCranyonID %>',
+      systemErrorID: '<%= htmlWebpackPlugin.options.init.systemErrorID %>'
+    };
+  </script>  
+</head>
+<body>
+  <pf-builder></pf-builder>
+  <pf-menu></pf-menu>
+</body>
+</html>

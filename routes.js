@@ -16,17 +16,8 @@ var notFoundCranyonID = envConfig.get('notFoundCranyonID');
 var systemErrorID     = envConfig.get('systemErrorID');
 
 router.get('/', function(req, res) {
-  var initialCranyon = envConfig.get('initial_cranyon');
-  var picDomain      = envConfig.get('pic_domain');
-  var renderObject = {
-    basic: true,
-    init: initialCranyon,
-    picDomain: picDomain,
-    notFoundCranyonID: notFoundCranyonID,
-    systemErrorID: systemErrorID
-  }
   res.append('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.render('index', renderObject);
+  res.render('index');
 });
 
 router.get('/cranyons/:id', function(req, res) {
