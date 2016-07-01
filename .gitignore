@@ -8,8 +8,9 @@ npm-debug.log
 # cache-busting build filename mappings
 rev-manifest.json
 
-# environment variable
+# app secrets
 config/environment.json
+assets/css/constants.css
 
 # project management
 stuph

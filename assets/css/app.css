@@ -1,3 +1,5 @@
+@import './constants';
+
 @viewport { 
   width: device-width;
   initial-scale: 1;
@@ -28,7 +30,7 @@ body {
   height: 100%;
   top: 0;
   left: 0;
-  background: url('../images/load.gif') center center no-repeat rgb(45, 45, 45);
+  background: url(var(--spinnerLocation)) center center no-repeat rgb(45, 45, 45);
   transition: background 0.5s, opacity 0.5s, visibility 0s 0.5s;
 }
 
@@ -48,7 +50,7 @@ body {
   bottom: 0;
   width: 6rem;
   height: 6rem;
-  background: url('../images/menu4.svg') center/contain no-repeat;
+  background: url(var(--menuIconLocation)) center/contain no-repeat;
 }
 
 .menu-page {

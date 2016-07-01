@@ -1,6 +1,12 @@
 const HtmlWebpackPlugin  = require('html-webpack-plugin');
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+// Post CSS Plugins
+const cssNext   = require('postcss-cssnext');
+const cssImport = require('postcss-import');
+
 const envConfig = require('./environment-config');
 
 const init = {
@@ -20,9 +26,7 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 
 module.exports = {
   entry: {
-    app: [
-      './assets/js/app.js'
-    ],
+    app: './assets/js/app.js',
     vendor: [
       'angular',
       'lodash',
@@ -30,7 +34,8 @@ module.exports = {
       'angular-animate',
       'raphael',
       'imagesloaded'
-    ]
+    ],
+    style: './assets/css/app.css'
   },
 
   module: {
@@ -43,13 +48,17 @@ module.exports = {
       {
         test: /\.html$/,
         loader: 'ng-cache'
+      },
+      {
+        test:   /\.css$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
       }
     ]
   },
 
   output: {
     filename: '[name]-[hash].js',
-    path: __dirname + '/public/js'
+    path: __dirname + '/public/assets'
   },
   plugins: [
     new CommonsChunkPlugin({
@@ -58,6 +67,17 @@ module.exports = {
       minChunks: Infinity
     }),
 
+    new ExtractTextPlugin('[hash].css', 
+    {
+      allChunks: true
+    }),
+
     HTMLWebpackPluginConfig
-  ]
+  ],
+  postcss: function (webpack) {
+      return [
+        cssImport,
+        cssNext
+      ];
+  }
 }
