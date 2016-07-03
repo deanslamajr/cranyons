@@ -1,4 +1,5 @@
 {
+  "NODE_ENV": "<production-or-development>"
   "MONGO_SUBDOMAIN": "<subdomain that mongo DB is located at>",
   "MONGO_PORT": "<mongo DB port#>",
   "MONGO_USERNAME": "<mongo DB username>",

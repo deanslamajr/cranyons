@@ -1,6 +1,7 @@
 'use strict';
 
-
+// Styles
+import '../css/app.css';
 
 // Add polyfills for full ES5 + ES6 environment with some new ECMAScript feature proposals(e.g. Array.prototype.includes())
 import "babel-polyfill";

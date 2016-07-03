@@ -1,12 +1,15 @@
+// Webpack plugins
 const HtmlWebpackPlugin  = require('html-webpack-plugin');
-const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
-
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
+const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
+const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 
 // Post CSS Plugins
 const cssNext   = require('postcss-cssnext');
 const cssImport = require('postcss-import');
 
+// Environment variables
 const envConfig = require('./environment-config');
 
 const init = {
@@ -17,12 +20,34 @@ const init = {
   systemErrorID:      envConfig.get('systemErrorID')
 }
 
-const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: __dirname + '/assets/index.ejs',
-  filename: '../index.ejs',
-  inject: 'body',
-  init
-});
+const plugins = [
+  new ExtractTextPlugin('style-[hash].css'),
+  new HtmlWebpackPlugin({
+    template: __dirname + '/assets/index.ejs',
+    filename: '../index.ejs',
+    inject: 'body',
+    init
+  }),
+  new CommonsChunkPlugin({
+    name: 'vendor',
+    filename: '[name].[hash].bundle.js',
+    minChunks: Infinity
+  })
+];
+
+// Production only plugins
+if (envConfig.get('NODE_ENV') === 'production') {
+  plugins.push(
+    new DedupePlugin()
+  );
+  plugins.push(
+    new UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  );
+}
 
 module.exports = {
   entry: {
@@ -34,8 +59,7 @@ module.exports = {
       'angular-animate',
       'raphael',
       'imagesloaded'
-    ],
-    style: './assets/css/app.css'
+    ]
   },
 
   module: {
@@ -60,24 +84,11 @@ module.exports = {
     filename: '[name]-[hash].js',
     path: __dirname + '/public/assets'
   },
-  plugins: [
-    new CommonsChunkPlugin({
-      name: 'vendor',
-      filename: '[name]-[hash].js',
-      minChunks: Infinity
-    }),
-
-    new ExtractTextPlugin('[hash].css', 
-    {
-      allChunks: true
-    }),
-
-    HTMLWebpackPluginConfig
-  ],
+  plugins,
   postcss: function (webpack) {
-      return [
-        cssImport,
-        cssNext
-      ];
+    return [
+      cssImport,
+      cssNext
+    ];
   }
 }
