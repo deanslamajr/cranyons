@@ -10,7 +10,6 @@ import angular from 'angular';
 import _       from 'lodash';
 
 // Registers as angular module
-import 'restangular';
 import 'angular-animate';
 
 import main from './app-main';
@@ -23,7 +22,6 @@ import directives  from './directives';
 
 let app = angular.module('app', [
   'ngAnimate',
-  'restangular',
   services.name,
   directives.name
 ]);

@@ -5,6 +5,8 @@
 
 'use strict';
 
+import axios from 'axios';
+
 /**
  * Cranyon service object for factory call
  */
@@ -13,12 +15,13 @@ class CranyonService {
   /**
    * Service constructor
    */
-  constructor($window, Restangular) {
+  constructor($window, $timeout) {
     this.activeCranyon;
 
     this.window      = $window;
+    this.timeout     = $timeout;
+
     this.picDomain   = this.window.appData.picDomain;
-    this.Restangular = Restangular;
 
     this.cranyonsQueue = [];
 
@@ -72,21 +75,26 @@ class CranyonService {
    * Get a particular Cranyon doc from DB and then get the Cranyon docs associated with all of its clickables
    */
   fetch(id) {
-    return this.Restangular.one('cranyons', id).get()
-      .then((cranyon) => {
+    return axios.get('/cranyons/' + id)
+      .then((response) => {
         // add cranyon data to queue. has side effect of adding new cranyon to view
-        this.add(cranyon);
+        const cranyon = response.data;
+        const addAction = this.add.bind(this, cranyon);
+        this.timeout(addAction);
         return this.fetchChildren(cranyon)
+      })
+      .catch(() => {
+        throw new Error('fetch rejected!');
       });
   }
 
   fetchChildren(cranyon) {
     const clickablesMeta = new Map();
     let tasks = cranyon.clickables.map(clickable => {
-      // @todo: cache layer => before hitting API, check if the clickable.id already exists in the map, if so don't bother hitting API!
-      return this.Restangular.one('cranyons', clickable.id).get()
-        .then((futureCran) => {
-          clickablesMeta.set(futureCran.id, futureCran);
+      return axios.get('/cranyons/' + clickable.id)
+        .then((response) => {
+          const futureCranyon = response.data;
+          clickablesMeta.set(futureCranyon.id, futureCranyon);
         });
     })
     return Promise.all(tasks)
@@ -165,6 +173,6 @@ class CranyonService {
 /**
  * Specify dependencies to be injected
  */
-CranyonService.$inject = ['$window', 'Restangular'];
+CranyonService.$inject = ['$window', '$timeout'];
 
 export default CranyonService;
