@@ -15,11 +15,12 @@ var db = mongojs(mongoLoginString, mongoCollection, {authMechanism: 'ScramSHA1'}
 var notFoundCranyonID = envConfig.get('notFoundCranyonID');
 var systemErrorID     = envConfig.get('systemErrorID');
 
-router.get('/', function(req, res) {
-  res.append('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.render('index');
-});
+function serveApp(response) {
+  response.append('Cache-Control', 'no-cache, no-store, must-revalidate');
+  response.render('index');
+}
 
+// have two different endpoints /cranyon/id/:id  &  /cranyon/name/:name
 router.get('/cranyons/:id', function(req, res) {
   var requestedCranyonId = req.params.id;
 
@@ -32,42 +33,12 @@ router.get('/cranyons/:id', function(req, res) {
   });
 });
 
-router.get('/:url', function(req, res) {
-  var url = req.params.url.toLowerCase();
-  var picDomain = envConfig.get('pic_domain');
+router.get('/:url', (req, res) => {
+  serveApp(res);
+})  
 
-  db[collection].findOne({url: url }, function(err, doc) {
-    if (doc) {
-      sendCranyon(doc);
-    } else {
-      notFound();
-    }
-  });
-
-  function sendCranyon(mongoDoc) {
-    var renderObject = {
-      basic: false,
-      init: mongoDoc,
-      picDomain: picDomain,
-      notFoundCranyonID: notFoundCranyonID,
-      systemErrorID: systemErrorID
-    }
-    res.append('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.render('index', renderObject);
-  }
-
-  function notFound() {
-    var picDomain  = envConfig.get('pic_domain');
-    var renderObject = {
-      basic: true,
-      init: notFoundCranyonID,
-      picDomain: picDomain,
-      notFoundCranyonID: notFoundCranyonID,
-      systemErrorID: systemErrorID
-    };
-    res.status(404);
-    res.render('index', renderObject);
-  }
+router.get('/', (req, res) => {
+  serveApp(res);
 })
 
 module.exports = router;

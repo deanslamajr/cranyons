@@ -2,13 +2,19 @@
 
 const main = function($rootScope, $window, Cranyons) {
   const init = $window.appData.init;
-  //@todo handle error case
-  if ($window.appData.basic) {
+
+  const cranyonName = $window.location.pathname.split('/')[1];
+
+  // client started at '/'
+  if (!cranyonName) {
     Cranyons.fetch(init);
     // update the browser history state with this state
     $window.history.replaceState({id: init}, '', ''); 
   }
+  // client-chosen initial cranyon
   else {
+    console.log('cranyonName', cranyonName);
+    // API call with cranyonName
     Cranyons.add(init);
     // update the browser history state with this state
     $window.history.replaceState({id: init.id}, '', '');
@@ -25,7 +31,7 @@ const main = function($rootScope, $window, Cranyons) {
 
   // handle bubbled up rejected promises
   $window.onunhandledrejection = event => {
-    console.log('promise rejected');
+    console.log('unhandled promise rejection!');
   };
 
   // handle bubbled up uncaught exceptions

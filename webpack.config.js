@@ -55,7 +55,7 @@ module.exports = {
     vendor: [
       'angular',
       'lodash',
-      'restangular',
+      'axios',
       'angular-animate',
       'raphael',
       'imagesloaded'
