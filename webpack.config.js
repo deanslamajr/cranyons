@@ -54,7 +54,6 @@ module.exports = {
     app: './assets/js/app.js',
     vendor: [
       'angular',
-      'lodash',
       'axios',
       'angular-animate',
       'raphael',

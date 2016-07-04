@@ -49,6 +49,8 @@ class CranyonCtrl {
     this.CranyonService.documentActiveCranyon.call(this.CranyonService, this.cranyon.id);
 
     this.setPageTitleToName();
+    // update the browser history state with this state
+    this.window.history.replaceState({id: this.cranyon.id}, '', '');
 
     this.CranyonService.setBackgroundImage(this.imageSrc);
     this.setIsActive(true);

@@ -74,11 +74,15 @@ class CranyonService {
   /**
    * Get a particular Cranyon doc from DB and then get the Cranyon docs associated with all of its clickables
    */
-  fetch(id) {
-    return axios.get('/cranyons/' + id)
+  fetch(id, useName) {
+    let lookupType = 'id';
+    if (useName) {
+      lookupType = 'name';
+    }
+    return axios.get('/cranyons/' + lookupType + '/' + id)
       .then((response) => {
-        // add cranyon data to queue. has side effect of adding new cranyon to view
         const cranyon = response.data;
+        // add cranyon data to queue. has side effect of adding new cranyon to view
         const addAction = this.add.bind(this, cranyon);
         this.timeout(addAction);
         return this.fetchChildren(cranyon)
@@ -91,7 +95,7 @@ class CranyonService {
   fetchChildren(cranyon) {
     const clickablesMeta = new Map();
     let tasks = cranyon.clickables.map(clickable => {
-      return axios.get('/cranyons/' + clickable.id)
+      return axios.get('/cranyons/id/' + clickable.id)
         .then((response) => {
           const futureCranyon = response.data;
           clickablesMeta.set(futureCranyon.id, futureCranyon);

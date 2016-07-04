@@ -8,18 +8,11 @@ const main = function($rootScope, $window, Cranyons) {
   // client started at '/'
   if (!cranyonName) {
     Cranyons.fetch(init);
-    // update the browser history state with this state
-    $window.history.replaceState({id: init}, '', ''); 
   }
   // client-chosen initial cranyon
   else {
     console.log('cranyonName', cranyonName);
-    // API call with cranyonName
-    Cranyons.add(init);
-    // update the browser history state with this state
-    $window.history.replaceState({id: init.id}, '', '');
-    // tell cranyon service this cranyon is the active one
-    Cranyons.fetchChildren(init);
+    Cranyons.fetch(cranyonName, true);
   }
 
   const backAction = Cranyons.backAction.bind(Cranyons, $rootScope);

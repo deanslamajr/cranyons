@@ -1,3 +1,5 @@
+'use strict';
+
 var express   = require('express');
 var mongojs   = require('mongojs');
 
@@ -20,17 +22,30 @@ function serveApp(response) {
   response.render('index');
 }
 
-// have two different endpoints /cranyon/id/:id  &  /cranyon/name/:name
-router.get('/cranyons/:id', function(req, res) {
-  var requestedCranyonId = req.params.id;
-
-  db[collection].findOne({id: requestedCranyonId }, function(err, doc) {
+function queryDB(response, queryObject) {
+  db[collection].findOne(queryObject, (err, doc) => {
     if (doc) {
-      res.json(doc);
+      response.json(doc);
     } else {
-      res.status(404).json({ error: err });
+      response.status(404).json({ error: err });
     }
   });
+}
+
+router.get('/cranyons/id/:id', (req, res) => {
+  const requestedCranyonId = req.params.id;
+
+  const queryObject = { id: requestedCranyonId };
+  queryDB(res, queryObject);
+});
+
+router.get('/cranyons/name/:name', (req, res) => {
+  let requestedCranyonName = req.params.name;
+  requestedCranyonName = requestedCranyonName.toLowerCase();
+
+  const queryObject = { url: requestedCranyonName };
+
+  queryDB(res, queryObject);
 });
 
 router.get('/:url', (req, res) => {
