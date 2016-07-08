@@ -82,7 +82,7 @@ class CranyonService {
       lookupType = 'name';
     }
     return axios.get('/cranyons/' + lookupType + '/' + id)
-      .then((response) => {       
+      .then((response) => {   
         const cranyon = response.data;
         // add cranyon data to queue. has side effect of adding new cranyon to view
         const addAction = this.add.bind(this, cranyon);
@@ -90,7 +90,9 @@ class CranyonService {
         return this.fetchChildren(cranyon)
       })
       .catch(() => {
-        throw new Error('fetch rejected!');
+        const cranyon404 = this.meta404;
+        const addAction = this.add.bind(this, cranyon404);
+        this.timeout(addAction);
       });
   }
 

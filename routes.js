@@ -24,7 +24,7 @@ function queryDB(response, queryObject) {
     if (doc) {
       response.json(doc);
     } else {
-      response.status(404).json({ error: err });
+      response.status(404).json({ error: 'cranyon with ID ' + queryObject.id + ' not found!' });
     }
   });
 }

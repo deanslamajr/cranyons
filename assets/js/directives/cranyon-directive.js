@@ -68,7 +68,7 @@ class CranyonCtrl {
 
     this.window.history.replaceState({id: notFoundCranyonID}, '', '/404');
 
-    // have we loaded the 404 page before?
+    // already hit API for 404
     if (cranService.hasAlreadySeenThis(notFoundCranyonID)) {
       const notFoundCranyonCtrl = cranService.cranyonHistory.get(notFoundCranyonID);
       notFoundCranyonCtrl.imageLoaded();
