@@ -23,6 +23,7 @@ class CranyonService {
 
     // initialized by webpack/definePlugin
     this.picDomain = definePlugin.picDomain;
+    this.meta404   = definePlugin.meta404;
 
     this.cranyonsQueue = [];
 
@@ -81,7 +82,7 @@ class CranyonService {
       lookupType = 'name';
     }
     return axios.get('/cranyons/' + lookupType + '/' + id)
-      .then((response) => {
+      .then((response) => {       
         const cranyon = response.data;
         // add cranyon data to queue. has side effect of adding new cranyon to view
         const addAction = this.add.bind(this, cranyon);
@@ -97,9 +98,13 @@ class CranyonService {
     const clickablesMeta = new Map();
     let tasks = cranyon.clickables.map(clickable => {
       return axios.get('/cranyons/id/' + clickable.id)
-        .then((response) => {
+        .then((response) => {      
           const futureCranyon = response.data;
           clickablesMeta.set(futureCranyon.id, futureCranyon);
+        })
+        // 404 on fetch of children, set the clickable to the 404 object
+        .catch(() => {
+          clickablesMeta.set(clickable.id, this.meta404);
         });
     })
     return Promise.all(tasks)
