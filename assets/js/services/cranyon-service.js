@@ -90,8 +90,7 @@ class CranyonService {
         return this.fetchChildren(cranyon)
       })
       .catch(() => {
-        const cranyon404 = this.meta404;
-        const addAction = this.add.bind(this, cranyon404);
+        const addAction = this.add.bind(this, this.meta404);
         this.timeout(addAction);
       });
   }

@@ -60,23 +60,21 @@ class CranyonCtrl {
 
   imageNotFound() {
     const cranService = this.CranyonService;
-
-    // initialized by webpack/definePlugin
-    const notFoundCranyonID = definePlugin.notFoundCranyonID;
+    const notFoundCranyon = cranService.meta404;
     
     cranService.inactivateCurrent.call(cranService);
 
-    this.window.history.replaceState({id: notFoundCranyonID}, '', '/404');
+    this.window.history.replaceState({id: notFoundCranyon.id}, '', '/404');
 
-    // already hit API for 404
-    if (cranService.hasAlreadySeenThis(notFoundCranyonID)) {
-      const notFoundCranyonCtrl = cranService.cranyonHistory.get(notFoundCranyonID);
+    // already hit a 404 cranyon
+    if (cranService.hasAlreadySeenThis(notFoundCranyon.id)) {
+      const notFoundCranyonCtrl = cranService.cranyonHistory.get(notFoundCranyon.id);
       notFoundCranyonCtrl.imageLoaded();
     }
     else {
-      cranService.fetch(notFoundCranyonID);
+      cranService.add(notFoundCranyon);
     }
-
+    this.scope.$apply();
     // Remove this broken cranyon from the app history
     cranService.forget(this.cranyon.id);
   }
