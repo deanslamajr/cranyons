@@ -21,7 +21,8 @@ class CranyonService {
     this.window      = $window;
     this.timeout     = $timeout;
 
-    this.picDomain   = this.window.appData.picDomain;
+    // initialized by webpack/definePlugin
+    this.picDomain = definePlugin.picDomain;
 
     this.cranyonsQueue = [];
 

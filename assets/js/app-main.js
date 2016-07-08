@@ -1,7 +1,8 @@
 'use strict';
 
 const main = function($rootScope, $window, Cranyons) {
-  const init = $window.appData.init;
+  // initialized by webpack/definePlugin
+  const init = definePlugin.init;
 
   const cranyonName = $window.location.pathname.split('/')[1];
 
@@ -11,7 +12,6 @@ const main = function($rootScope, $window, Cranyons) {
   }
   // client-chosen initial cranyon
   else {
-    console.log('cranyonName', cranyonName);
     Cranyons.fetch(cranyonName, true);
   }
 
@@ -31,7 +31,8 @@ const main = function($rootScope, $window, Cranyons) {
   $window.onerror = event => {
     console.log('uncaught exception');
 
-    const systemErrorID = $window.appData.systemErrorID;
+    // initialized by webpack/definePlugin
+    const systemErrorID = definePlugin.systemErrorID;
 
     // don't hit the API twice for 5xx cranyon meta data
     if (Cranyons.hasAlreadySeenThis(systemErrorID)) {

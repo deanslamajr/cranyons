@@ -14,9 +14,6 @@ var mongoCollection  = [];
 mongoCollection.push(collection);
 var db = mongojs(mongoLoginString, mongoCollection, {authMechanism: 'ScramSHA1'});
 
-var notFoundCranyonID = envConfig.get('notFoundCranyonID');
-var systemErrorID     = envConfig.get('systemErrorID');
-
 function serveApp(response) {
   response.append('Cache-Control', 'no-cache, no-store, must-revalidate');
   response.render('index');

@@ -60,7 +60,9 @@ class CranyonCtrl {
 
   imageNotFound() {
     const cranService = this.CranyonService;
-    const notFoundCranyonID = this.window.appData.notFoundCranyonID;
+
+    // initialized by webpack/definePlugin
+    const notFoundCranyonID = definePlugin.notFoundCranyonID;
     
     cranService.inactivateCurrent.call(cranService);
 
