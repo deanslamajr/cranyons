@@ -3,19 +3,11 @@ var path 	      = require('path');
 var bodyParser  = require('body-parser');
 var router 	    = require('./routes');
 
-var assetHash   = require('./rev_helper/asset-hash');
-var envConfig   = require('./environment-config');
-
 var app = express();
 
 app.set('view engine', 'ejs');
 app.set('port', (process.env.PORT || 1337))
 app.set('views', path.join(__dirname, 'public'));
-
-Object.assign(app.locals, {
-  assetHash: assetHash,
-  picDomain: envConfig.get('pic_domain')
-});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
