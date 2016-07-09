@@ -24,6 +24,7 @@ class CranyonService {
     // initialized by webpack/definePlugin
     this.picDomain = definePlugin.picDomain;
     this.meta404   = definePlugin.meta404;
+    this.meta500   = definePlugin.meta500;
 
     this.cranyonsQueue = [];
 
@@ -90,9 +91,15 @@ class CranyonService {
           const futureCranyon = response.data;
           clickablesMeta.set(futureCranyon.id, futureCranyon);
         })
-        // if 404 on fetch of children, set the clickable to the 404 object
-        .catch(() => {
-          clickablesMeta.set(clickable.id, this.meta404);
+        .catch((response) => {
+          // 404: cranyon not found
+          if (response.data && response.data.error) {
+            clickablesMeta.set(clickable.id, this.meta404);
+          }
+          // 500: server error
+          else {
+            clickablesMeta.set(clickable.id, this.meta500);
+          }
         });
     })
     return Promise.all(tasks)

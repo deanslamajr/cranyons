@@ -29,8 +29,7 @@ const main = function($rootScope, $window, Cranyons) {
 
   // handle bubbled up uncaught exceptions
   $window.onerror = event => {
-    // initialized by webpack/definePlugin
-    const systemErrorCranyon = definePlugin.meta500;
+    const systemErrorCranyon = Cranyons.meta500;
 
     // have already seen the 500 cranyon, don't create another cranyon, just use the old one
     if (Cranyons.hasAlreadySeenThis(systemErrorCranyon.id)) {
