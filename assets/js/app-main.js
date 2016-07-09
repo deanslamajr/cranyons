@@ -42,7 +42,7 @@ const main = function($rootScope, $window, Cranyons) {
     }
 
     // update the browser history state with this state
-    $window.history.pushState({id: systemErrorID}, '', '/500');
+    $window.history.pushState({id: systemErrorCranyon.id}, '', '/500');
   };
 }
 

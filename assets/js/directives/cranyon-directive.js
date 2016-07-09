@@ -125,11 +125,8 @@ class CranyonCtrl {
 
   onClickableClick(id) {
     this.CranyonService.isLoading(true);
-    this.scope.$apply();
-
     this.clearClickables();
     this.CranyonService.clickableClicked.call(this.CranyonService, id, this.cranyon);
-    this.scope.$apply();
   }
 
   setIsActive(value) {

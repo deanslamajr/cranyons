@@ -28,7 +28,6 @@ class CranyonService {
     this.cranyonsQueue = [];
 
     this.loading = true;
-    this.visited404 = false;
 
     this.futureCranyons = new Map();
     this.cranyonHistory = new Map();
@@ -52,7 +51,7 @@ class CranyonService {
    * Add a cranyon object to the queue
    */
   add(cranyon) {
-    this.cranyonsQueue.push(cranyon);
+    this.timeout(() => { this.cranyonsQueue.push(cranyon) });
   }
 
   /**
@@ -61,16 +60,6 @@ class CranyonService {
   remove(id) {
     const index = this.cranyonsQueue.findIndex((element) => element.id === id)
     this.cranyonsQueue.splice(index, 1);
-  }
-
-  /**
-   * Remove a cranyon object from the queue and unregister it from the history
-   */
-  forget(cranyonID) {
-    // remove cranyon from queue
-    this.remove(cranyonID);
-    // unregister
-    this.unregister(cranyonID);
   }
 
   /**
@@ -85,13 +74,11 @@ class CranyonService {
       .then((response) => {   
         const cranyon = response.data;
         // add cranyon data to queue. has side effect of adding new cranyon to view
-        const addAction = this.add.bind(this, cranyon);
-        this.timeout(addAction);
+        this.add(cranyon);
         return this.fetchChildren(cranyon)
       })
       .catch(() => {
-        const addAction = this.add.bind(this, this.meta404);
-        this.timeout(addAction);
+        this.add(this.meta404);
       });
   }
 
@@ -103,7 +90,7 @@ class CranyonService {
           const futureCranyon = response.data;
           clickablesMeta.set(futureCranyon.id, futureCranyon);
         })
-        // 404 on fetch of children, set the clickable to the 404 object
+        // if 404 on fetch of children, set the clickable to the 404 object
         .catch(() => {
           clickablesMeta.set(clickable.id, this.meta404);
         });
@@ -112,14 +99,6 @@ class CranyonService {
       .then(() => {
         this.futureCranyons.set(cranyon.id, clickablesMeta);
       });
-  }
-
-  documentActiveCranyon(id) {
-    this.activeCranyon = id;
-  }
-
-  hasAlreadySeenThis(id) {
-    return !!this.cranyonHistory.get(id);
   }
 
   clickableClicked(clickableID, currentCranyon) {
@@ -176,8 +155,26 @@ class CranyonService {
     }
   }
 
+  /**
+   * Remove a cranyon object from the queue and unregister it from the history
+   */
+  forget(cranyonID) {
+    // remove cranyon from queue
+    this.remove(cranyonID);
+    // unregister
+    this.unregister(cranyonID);
+  }
+
   isLoading(loading) {
     this.loading = loading;
+  }
+
+  documentActiveCranyon(id) {
+    this.activeCranyon = id;
+  }
+
+  hasAlreadySeenThis(id) {
+    return !!this.cranyonHistory.get(id);
   }
 }
 
