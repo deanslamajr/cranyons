@@ -20,9 +20,8 @@ const constants = require('./config/constants');
 const replacements =  {
   'definePlugin.init': JSON.stringify(envConfig.get('initial_cranyon')),
   'definePlugin.picDomain': JSON.stringify(envConfig.get('pic_domain')),
-  'definePlugin.notFoundCranyonID': JSON.stringify(envConfig.get('notFoundCranyonID')),
-  'definePlugin.systemErrorID': JSON.stringify(envConfig.get('systemErrorID')),
-  'definePlugin.meta404': JSON.stringify(constants.meta404)
+  'definePlugin.meta404': JSON.stringify(constants.meta404),
+  'definePlugin.meta500': JSON.stringify(constants.meta500)
 }
 
 const plugins = [

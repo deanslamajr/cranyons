@@ -29,22 +29,20 @@ const main = function($rootScope, $window, Cranyons) {
 
   // handle bubbled up uncaught exceptions
   $window.onerror = event => {
-    console.log('uncaught exception');
-
     // initialized by webpack/definePlugin
-    const systemErrorID = definePlugin.systemErrorID;
+    const systemErrorCranyon = definePlugin.meta500;
 
-    // don't hit the API twice for 5xx cranyon meta data
-    if (Cranyons.hasAlreadySeenThis(systemErrorID)) {
-      const cranyonUpNextCtrl = Cranyons.cranyonHistory.get(systemErrorID);
+    // have already seen the 500 cranyon, don't create another cranyon, just use the old one
+    if (Cranyons.hasAlreadySeenThis(systemErrorCranyon.id)) {
+      const cranyonUpNextCtrl = Cranyons.cranyonHistory.get(systemErrorCranyon.id);
       cranyonUpNextCtrl.imageLoaded();
     }
     else {
-      Cranyons.fetch(systemErrorID);
+      Cranyons.add(systemErrorCranyon);
     }
 
     // update the browser history state with this state
-    $window.history.pushState({id: systemErrorID}, '', '/5xx');
+    $window.history.pushState({id: systemErrorID}, '', '/500');
   };
 }
 
