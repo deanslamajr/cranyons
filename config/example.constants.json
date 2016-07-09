@@ -1,4 +1,5 @@
 {
   "meta404": "<cranyon-data-object-associated-with-404-cranyon",
-  "meta500": "<cranyon-data-object-associated-with-500-cranyon"
+  "meta500": "<cranyon-data-object-associated-with-500-cranyon",
+  "init": "<initial-cranyon-data-object>"
 }

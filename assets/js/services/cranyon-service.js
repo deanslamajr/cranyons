@@ -21,17 +21,18 @@ class CranyonService {
     this.window      = $window;
     this.timeout     = $timeout;
 
-    // initialized by webpack/definePlugin
-    this.picDomain = definePlugin.picDomain;
-    this.meta404   = definePlugin.meta404;
-    this.meta500   = definePlugin.meta500;
-
     this.cranyonsQueue = [];
 
     this.loading = true;
 
     this.futureCranyons = new Map();
     this.cranyonHistory = new Map();
+
+    // initialized by webpack/definePlugin
+    this.picDomain = definePlugin.picDomain;
+    this.meta404   = definePlugin.meta404;
+    this.meta500   = definePlugin.meta500;
+    this.metaInit  = definePlugin.metaInit;
   }
 
   /**

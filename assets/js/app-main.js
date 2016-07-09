@@ -1,20 +1,7 @@
 'use strict';
 
 const main = function($rootScope, $window, Cranyons) {
-  // initialized by webpack/definePlugin
-  const init = definePlugin.init;
-
   const cranyonName = $window.location.pathname.split('/')[1];
-
-  // client started at '/'
-  if (!cranyonName) {
-    Cranyons.fetch(init);
-  }
-  // client-chosen initial cranyon
-  else {
-    Cranyons.fetch(cranyonName, true);
-  }
-
   const backAction = Cranyons.backAction.bind(Cranyons, $rootScope);
 
   // attach back button listener
@@ -43,6 +30,17 @@ const main = function($rootScope, $window, Cranyons) {
     // update the browser history state with this state
     $window.history.pushState({id: systemErrorCranyon.id}, '', '/500');
   };
+
+  // client started at '/'
+  if (!cranyonName) {
+    const init = Cranyons.metaInit;
+    Cranyons.add(init);
+    Cranyons.fetchChildren(init);
+  }
+  // client-chosen initial cranyon
+  else {
+    Cranyons.fetch(cranyonName, true);
+  }
 }
 
 main.$inject = ['$rootScope', '$window', 'Cranyons'];
