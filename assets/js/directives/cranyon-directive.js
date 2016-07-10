@@ -10,6 +10,17 @@ import Raphael from 'raphael';
 
 import cranyonTemplate from '../../templates/cranyon-directive.html';
 
+const greatorStyle = {
+  width: 'auto',
+  height: '100%',
+  maxWidth: '100%'
+};
+const lessorStyle = {
+  width: "100%",
+  height: "auto",
+  maxHeight: "100%"
+}
+
 /**
  * Directive controller
  * @class
@@ -18,20 +29,22 @@ class CranyonCtrl {
   /**
    * Directive constructor
    * @param  {Object} $window    AngularJS wrapper of browser object
+   * @param  {Object} $scope     AngularJS scope object
+   * @param  {Object} Cranyons   Service providing Cranyon utility methods
+   * @param  {Object} Draw       Service providing methods to assist in drawing clickables
    */
-  constructor($window, $document, $scope, Cranyons, Draw) {
-    this.imageSrc;
-    this.picAspect;
-    this.windowRatio;
-    this.paper;
+  constructor($window, $scope, Cranyons, Draw) {
+    this.window         = $window; 
+    this.scope          = $scope;
+    this.CranyonService = Cranyons;
+    this.DrawService    = Draw;
 
-    this.window          = $window; 
-    this.document        = $document[0];
-    this.scope           = $scope;
-    this.CranyonService  = Cranyons;
-    this.DrawService     = Draw;
+    this.document = this.window.document;
 
-    this.isActive         = false;
+    this.isActive = false;
+
+    // set cranyon data
+    this.imageSrc = this.CranyonService.picDomain + this.cranyon.image;
 
     // register this controller with the cranyon service
     this.CranyonService.register(this.cranyon.id, this);
@@ -87,10 +100,6 @@ class CranyonCtrl {
     this.DrawService.clearClickables();
   }
 
-  getImagePath() {
-    return this.CranyonService.picDomain + this.cranyon.image;
-  }
-
   computeWindowRatio() {
     return this.window.innerWidth / this.window.innerHeight;
   }
@@ -133,19 +142,6 @@ class CranyonCtrl {
 function link(scope, element, attributes, CranyonCtrl) {
   const imgJQL = element.find('img');
   const winJQL = angular.element(CranyonCtrl.window);
-  const greatorStyle = {
-    width: 'auto',
-    height: '100%',
-    maxWidth: '100%'
-  };
-  const lessorStyle = {
-    width: "100%",
-    height: "auto",
-    maxHeight: "100%"
-  }
-
-  // set cranyon data
-  CranyonCtrl.imageSrc = CranyonCtrl.getImagePath();
 
   function setImgStyle() {
     if (CranyonCtrl.isWindowGreatorAspect()) {
@@ -160,7 +156,6 @@ function link(scope, element, attributes, CranyonCtrl) {
     winJQL.unbind('resize');
     // set this cranyon to resize if window is resized
     winJQL.bind('resize', () => {
-      console.log('taco shell ' + CranyonCtrl.cranyon.id);
       if (CranyonCtrl.isActive) {
         CranyonCtrl.clearClickables();
       }
@@ -178,7 +173,7 @@ function link(scope, element, attributes, CranyonCtrl) {
 /**
  * Specify dependencies to be injected
  */
-CranyonCtrl.$inject = ['$window', '$document', '$scope', 'Cranyons', 'Draw'];
+CranyonCtrl.$inject = ['$window', '$scope', 'Cranyons', 'Draw'];
 
 function Cranyon() {
   return {
