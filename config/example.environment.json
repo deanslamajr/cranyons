@@ -5,6 +5,5 @@
   "MONGO_USERNAME": "<mongo DB username>",
   "MONGO_PASS": "<mongoDB password>",
   "MONGO_COLLECTION": "<mongoDB collection name>",
-  "pic_domain": "<absolute url of asset storage(pics)>",
-  "initial_cranyon": "<id of initial cranyon>"
+  "PICS_DOMAIN": "<absolute url of asset storage(pics)>"
 }

@@ -18,7 +18,7 @@ const constants = require('./config/constants');
 
 // Mapping of build-time replacements for DefinePlugin
 const replacements =  {
-  'definePlugin.picDomain': JSON.stringify(envConfig.get('pic_domain')),
+  'definePlugin.picDomain': JSON.stringify(envConfig.get('PICS_DOMAIN')),
   'definePlugin.meta404': JSON.stringify(constants.meta404),
   'definePlugin.meta500': JSON.stringify(constants.meta500),
   'definePlugin.metaInit': JSON.stringify(constants.init)
