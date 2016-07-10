@@ -1,5 +1,10 @@
 {
-  "meta404": "<cranyon-data-object-associated-with-404-cranyon",
-  "meta500": "<cranyon-data-object-associated-with-500-cranyon",
-  "init": "<initial-cranyon-data-object>"
+  "NOT_FOUND_CRANYON": "<cranyon-data-object-associated-with-404-cranyon",
+  "SYSTEM_ERROR_CRANYON": "<cranyon-data-object-associated-with-500-cranyon",
+  "INITIAL_CRANYON": "<initial-cranyon-data-object>",
+  "PICS_DOMAIN": {
+    "MOBILE": "<domain-of-mobile-optimized-pic-bucket>",
+    "MAIN": "<domain-of-main-pic-bucket>",
+    "HIGH": "<domain-of-hi-res-pic-bucket>"
+  }
 }

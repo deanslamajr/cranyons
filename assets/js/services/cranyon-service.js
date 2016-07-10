@@ -29,10 +29,15 @@ class CranyonService {
     this.cranyonHistory = new Map();
 
     // initialized by webpack/definePlugin
-    this.picDomain = definePlugin.picDomain;
-    this.meta404   = definePlugin.meta404;
-    this.meta500   = definePlugin.meta500;
-    this.metaInit  = definePlugin.metaInit;
+    this.PICS_DOMAIN = DP.PICS_DOMAIN;
+    this.NOT_FOUND_CRANYON   = DP.NOT_FOUND_CRANYON;
+    this.SYSTEM_ERROR_CRANYON   = DP.SYSTEM_ERROR_CRANYON;
+    this.INITIAL_CRANYON  = DP.INITIAL_CRANYON;
+
+    // set the optimum pic resolution according to screen size
+    this.PICS_DOMAIN = this.window.innerWidth > 700 
+      ? this.PICS_DOMAIN.MAIN 
+      : this.PICS_DOMAIN.MOBILE;
   }
 
   /**
@@ -80,7 +85,7 @@ class CranyonService {
         return this.fetchChildren(cranyon)
       })
       .catch(() => {
-        this.add(this.meta404);
+        this.add(this.NOT_FOUND_CRANYON);
       });
   }
 
@@ -95,11 +100,11 @@ class CranyonService {
         .catch((response) => {
           // 404: cranyon not found
           if (response.data && response.data.error) {
-            clickablesMeta.set(clickable.id, this.meta404);
+            clickablesMeta.set(clickable.id, this.NOT_FOUND_CRANYON);
           }
           // 500: server error
           else {
-            clickablesMeta.set(clickable.id, this.meta500);
+            clickablesMeta.set(clickable.id, this.SYSTEM_ERROR_CRANYON);
           }
         });
     })

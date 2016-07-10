@@ -5,5 +5,4 @@
   "MONGO_USERNAME": "<mongo DB username>",
   "MONGO_PASS": "<mongoDB password>",
   "MONGO_COLLECTION": "<mongoDB collection name>",
-  "PICS_DOMAIN": "<absolute url of asset storage(pics)>"
 }

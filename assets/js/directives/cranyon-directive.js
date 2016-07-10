@@ -44,7 +44,7 @@ class CranyonCtrl {
     this.isActive = false;
 
     // set cranyon data
-    this.imageSrc = this.CranyonService.picDomain + this.cranyon.image;
+    this.imageSrc = this.CranyonService.PICS_DOMAIN + this.cranyon.image;
 
     // register this controller with the cranyon service
     this.CranyonService.register(this.cranyon.id, this);
@@ -73,7 +73,7 @@ class CranyonCtrl {
 
   imageNotFound() {
     const cranService = this.CranyonService;
-    const notFoundCranyon = cranService.meta404;
+    const notFoundCranyon = cranService.NOT_FOUND_CRANYON;
     
     cranService.inactivateCurrent.call(cranService);
 

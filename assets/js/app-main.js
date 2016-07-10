@@ -16,7 +16,7 @@ const main = function($rootScope, $window, Cranyons) {
 
   // handle bubbled up uncaught exceptions
   $window.onerror = event => {
-    const systemErrorCranyon = Cranyons.meta500;
+    const systemErrorCranyon = Cranyons.SYSTEM_ERROR_CRANYON;
 
     // have already seen the 500 cranyon, don't create another cranyon, just use the old one
     if (Cranyons.hasAlreadySeenThis(systemErrorCranyon.id)) {
@@ -33,7 +33,7 @@ const main = function($rootScope, $window, Cranyons) {
 
   // client started at '/'
   if (!cranyonName) {
-    const init = Cranyons.metaInit;
+    const init = Cranyons.INITIAL_CRANYON;
     Cranyons.add(init);
     Cranyons.fetchChildren(init);
   }
