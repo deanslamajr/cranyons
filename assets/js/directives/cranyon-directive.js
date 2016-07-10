@@ -87,10 +87,6 @@ class CranyonCtrl {
     this.DrawService.clearClickables();
   }
 
-  getPicAspect() {
-    return this.cranyon.aspectRatio;
-  }
-
   getImagePath() {
     return this.CranyonService.picDomain + this.cranyon.image;
   }
@@ -100,7 +96,7 @@ class CranyonCtrl {
   }
 
   isWindowGreatorAspect() {
-    return this.windowRatio >= this.picAspect;
+    return this.computeWindowRatio() >= this.cranyon.aspectRatio;
   }
 
   /**
@@ -151,9 +147,6 @@ function link(scope, element, attributes, CranyonCtrl) {
   // set cranyon data
   CranyonCtrl.imageSrc = CranyonCtrl.getImagePath();
 
-  CranyonCtrl.picAspect = CranyonCtrl.getPicAspect();
-  CranyonCtrl.windowRatio = CranyonCtrl.computeWindowRatio();
-
   function setImgStyle() {
     if (CranyonCtrl.isWindowGreatorAspect()) {
       imgJQL.css(greatorStyle);
@@ -162,17 +155,23 @@ function link(scope, element, attributes, CranyonCtrl) {
     }
   }
 
-  winJQL.bind('resize', () => {
-    if (CranyonCtrl.isActive) {
-      CranyonCtrl.clearClickables();
-    }
-    CranyonCtrl.windowRatio = CranyonCtrl.computeWindowRatio();
-    setImgStyle();
-    if (CranyonCtrl.isActive) {
-      CranyonCtrl.imageLoaded();
-    }
-  })
+  CranyonCtrl.resize = () => {
+    // clear previous resize bindings
+    winJQL.unbind('resize');
+    // set this cranyon to resize if window is resized
+    winJQL.bind('resize', () => {
+      console.log('taco shell ' + CranyonCtrl.cranyon.id);
+      if (CranyonCtrl.isActive) {
+        CranyonCtrl.clearClickables();
+      }
+      setImgStyle();
+      if (CranyonCtrl.isActive) {
+        CranyonCtrl.imageLoaded();
+      }
+    });
+  };
 
+  CranyonCtrl.resize();
   setImgStyle();
 }
 

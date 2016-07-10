@@ -117,6 +117,7 @@ class CranyonService {
     if (this.hasAlreadySeenThis(cranyonUpNext.id)) {
       const cranyonUpNextCtrl = this.cranyonHistory.get(cranyonUpNext.id);
       cranyonUpNextCtrl.imageLoaded();
+      cranyonUpNextCtrl.resize();
     }
     // haven't been to this cranyon yet
     else {
@@ -143,6 +144,7 @@ class CranyonService {
     this.isLoading(true);
     rootscope.$apply();
     const pastCranyonCtrl = this.cranyonHistory.get(id);
+    // This cranyon exists in app cache
     if (pastCranyonCtrl) {
 
       this.setBackgroundImage(pastCranyonCtrl.imageSrc);
@@ -154,8 +156,11 @@ class CranyonService {
       rootscope.$apply();
       pastCranyonCtrl.init();
       this.isLoading(false);
+      pastCranyonCtrl.resize();
       rootscope.$apply();
-    } else {
+    } 
+    // This cranyon does not exist in app cache
+    else {
       currentCranyonCtrl.clearClickables();
       currentCranyonCtrl.setIsActive(false);
       this.fetch(id);
