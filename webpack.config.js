@@ -28,7 +28,7 @@ const plugins = [
   new ExtractTextPlugin('style-[hash].css'),
   new HtmlWebpackPlugin({
     template: __dirname + '/assets/index.ejs',
-    filename: '../index.ejs',
+    filename: '../index.html',
     inject: 'body',
     baseIconURL: envConfig.get('BASE_ICON_URL')
   }),

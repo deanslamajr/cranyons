@@ -16,7 +16,7 @@ var db = mongojs(mongoLoginString, mongoCollection, {authMechanism: 'ScramSHA1'}
 
 function serveApp(response) {
   response.append('Cache-Control', 'no-cache, no-store, must-revalidate');
-  response.render('index');
+  response.sendfile('index.html');
 }
 
 function queryDB(response, queryObject) {

@@ -5,7 +5,6 @@ var router 	    = require('./routes');
 
 var app = express();
 
-app.set('view engine', 'ejs');
 app.set('port', (process.env.PORT || 1337))
 app.set('views', path.join(__dirname, 'public'));
 
