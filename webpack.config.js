@@ -29,7 +29,8 @@ const plugins = [
   new HtmlWebpackPlugin({
     template: __dirname + '/assets/index.ejs',
     filename: '../index.ejs',
-    inject: 'body'
+    inject: 'body',
+    baseIconURL: envConfig.get('BASE_ICON_URL')
   }),
   new CommonsChunkPlugin({
     name: 'vendor',
