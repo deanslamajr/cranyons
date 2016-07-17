@@ -24,6 +24,7 @@ class CranyonService {
     this.cranyonsQueue = [];
 
     this.loading = true;
+    this.isInitialLoad = true;
 
     this.futureCranyons = new Map();
     this.cranyonHistory = new Map();

@@ -6,7 +6,10 @@ const main = function($rootScope, $window, Cranyons) {
 
   // attach back button listener
   $window.onpopstate = event => {
-    backAction(event.state.id);
+    // conditional exists to prevent an odd iOS bug
+    if (event && event.state) {
+      backAction(event.state.id);
+    }
   };
 
   // handle bubbled up rejected promises

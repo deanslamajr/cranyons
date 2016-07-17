@@ -6,8 +6,8 @@ var router 	    = require('./routes');
 var app = express();
 
 app.set('port', (process.env.PORT || 1337))
-app.set('views', path.join(__dirname, 'public'));
 
+// to serve local files - for dev only
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.json());

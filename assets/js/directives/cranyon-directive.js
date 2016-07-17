@@ -58,6 +58,12 @@ class CranyonCtrl {
   }
 
   imageLoaded() {
+    // fade app's initial load spinner if this is the inital load of app
+    if (this.CranyonService.isInitialLoad) {
+      this.document.querySelector('.initial-spinner').style.visibility = "hidden";
+      this.CranyonService.isInitialLoad = false;
+    }
+
     this.CranyonService.inactivateCurrent.call(this.CranyonService);
     this.CranyonService.documentActiveCranyon.call(this.CranyonService, this.cranyon.id);
 

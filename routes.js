@@ -2,6 +2,7 @@
 
 var express   = require('express');
 var mongojs   = require('mongojs');
+var path      = require('path');
 
 var envConfig = require('./environment-config');
 
@@ -16,7 +17,7 @@ var db = mongojs(mongoLoginString, mongoCollection, {authMechanism: 'ScramSHA1'}
 
 function serveApp(response) {
   response.append('Cache-Control', 'no-cache, no-store, must-revalidate');
-  response.sendfile('index.html');
+  response.sendFile(path.join(__dirname, 'public/index.html'));
 }
 
 function queryDB(response, queryObject) {
