@@ -5,6 +5,7 @@ const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 // Post CSS Plugins
 const cssNext   = require('postcss-cssnext');
@@ -52,6 +53,15 @@ if (envConfig.get('NODE_ENV') === 'production') {
       }
     })
   );
+  plugins.push(
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.js$/,
+      threshold: 10240,
+      minRatio: 0.8
+    })
+  )
 }
 
 module.exports = {
