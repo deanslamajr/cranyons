@@ -27,13 +27,15 @@ class DrawService {
   }
 
   removePaper() {
-    try {
-      this.paper.remove();
-    }
-    catch(error) {
-      this.paper.delete;
-      console.log('error trying to invoke paper.remove():\n' + error);
-      console.log('deleted it instead');
+    if (this.paper) {
+      try {
+        this.paper.remove();
+      }
+      catch(error) {
+        this.paper.delete;
+        console.log('error trying to invoke paper.remove():\n' + error);
+        console.log('deleted it instead');
+      }
     }
   }
 

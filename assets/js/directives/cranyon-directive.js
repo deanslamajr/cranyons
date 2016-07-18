@@ -64,6 +64,7 @@ class CranyonCtrl {
       this.CranyonService.isInitialLoad = false;
     }
 
+    this.clearClickables();
     this.CranyonService.inactivateCurrent.call(this.CranyonService);
     this.CranyonService.documentActiveCranyon.call(this.CranyonService, this.cranyon.id);
 
@@ -102,16 +103,16 @@ class CranyonCtrl {
     this.document.title = 'Cranyons - ' + this.cranyon.name;
   }
 
-  clearClickables() {
-    this.DrawService.clearClickables();
-  }
-
   computeWindowRatio() {
     return this.window.innerWidth / this.window.innerHeight;
   }
 
   isWindowGreatorAspect() {
     return this.computeWindowRatio() >= this.cranyon.aspectRatio;
+  }
+
+  clearClickables() {
+    this.DrawService.clearClickables();
   }
 
   /**
@@ -136,7 +137,6 @@ class CranyonCtrl {
 
   onClickableClick(id) {
     this.CranyonService.isLoading(true);
-    this.clearClickables();
     this.CranyonService.clickableClicked.call(this.CranyonService, id, this.cranyon);
   }
 

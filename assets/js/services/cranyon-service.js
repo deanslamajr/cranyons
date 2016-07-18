@@ -139,13 +139,17 @@ class CranyonService {
     }
   }
 
+  getActiveCranyonCtrl() {
+    return this.cranyonHistory.get(this.activeCranyon);
+  }
+
   setBackgroundImage(imageSrc) {
     const el = this.window.document.querySelector('.letterbox')
     el.style.backgroundImage = 'url("' + imageSrc + '")';
   }
 
   backAction(rootscope, id) {
-    const currentCranyonCtrl = this.cranyonHistory.get(this.activeCranyon);
+    const currentCranyonCtrl = this.getActiveCranyonCtrl();
     this.activeCranyon = id; 
     this.isLoading(true);
     rootscope.$apply();

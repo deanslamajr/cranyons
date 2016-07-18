@@ -24,6 +24,7 @@ body {
 }
 
 .builder-loading {
+  z-index: 9;
   opacity: .61;
   position: fixed;
   width: 100%;
