@@ -21,17 +21,18 @@ const main = function($rootScope, $window, Cranyons) {
   $window.onerror = event => {
     const systemErrorCranyon = Cranyons.SYSTEM_ERROR_CRANYON;
 
-    // have already seen the 500 cranyon, don't create another cranyon, just use the old one
+    // update the browser history state with this state
+    $window.history.pushState({id: systemErrorCranyon.id}, '', '/500');
+
+    // 500 cranyon exists in app cache
     if (Cranyons.hasAlreadySeenThis(systemErrorCranyon.id)) {
       const cranyonUpNextCtrl = Cranyons.cranyonHistory.get(systemErrorCranyon.id);
       cranyonUpNextCtrl.imageLoaded();
     }
+    // Does not exist in app cache
     else {
       Cranyons.add(systemErrorCranyon);
     }
-
-    // update the browser history state with this state
-    $window.history.pushState({id: systemErrorCranyon.id}, '', '/500');
   };
 
   // client started at '/'

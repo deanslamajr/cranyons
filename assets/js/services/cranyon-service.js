@@ -156,8 +156,6 @@ class CranyonService {
 
     // Next cranyon exists in app cache
     if (nextCranyonCtrl) {
-      // @TODO if it's possible to hit cached 404 page via back:
-      //    need to check whether this id would have caused a 404
       nextCranyonCtrl.imageLoaded();
       nextCranyonCtrl.resize();
     } 

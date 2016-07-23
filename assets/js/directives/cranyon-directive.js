@@ -81,20 +81,19 @@ class CranyonCtrl {
   imageNotFound() {
     const cranService = this.CranyonService;
     const notFoundCranyon = cranService.NOT_FOUND_CRANYON;
-    
-    cranService.inactivateCurrent.call(cranService);
 
+    //update the browser history state with this state
     this.window.history.replaceState({id: notFoundCranyon.id}, '', '/404');
 
-    // already hit a 404 cranyon
+    // 404 cranyon exists in app cache
     if (cranService.hasAlreadySeenThis(notFoundCranyon.id)) {
       const notFoundCranyonCtrl = cranService.cranyonHistory.get(notFoundCranyon.id);
       notFoundCranyonCtrl.imageLoaded();
     }
+    // Does not exist in app cache
     else {
       cranService.add(notFoundCranyon);
     }
-    this.scope.$apply();
     // Remove this broken cranyon from the app history
     cranService.forget(this.cranyon.id);
   }
