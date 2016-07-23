@@ -149,32 +149,22 @@ class CranyonService {
   }
 
   backAction(rootscope, id) {
-    const currentCranyonCtrl = this.getActiveCranyonCtrl();
-    this.activeCranyon = id; 
     this.isLoading(true);
-    rootscope.$apply();
-    const pastCranyonCtrl = this.cranyonHistory.get(id);
-    // This cranyon exists in app cache
-    if (pastCranyonCtrl) {
 
-      this.setBackgroundImage(pastCranyonCtrl.imageSrc);
+    const currentCranyonCtrl = this.getActiveCranyonCtrl();
+    const nextCranyonCtrl = this.cranyonHistory.get(id);
 
-      currentCranyonCtrl.clearClickables();
-      currentCranyonCtrl.setIsActive(false);
-      pastCranyonCtrl.setIsActive(true);
-      pastCranyonCtrl.setPageTitleToName();
-      rootscope.$apply();
-      pastCranyonCtrl.init();
-      this.isLoading(false);
-      pastCranyonCtrl.resize();
-      rootscope.$apply();
+    // Next cranyon exists in app cache
+    if (nextCranyonCtrl) {
+      // @TODO if it's possible to hit cached 404 page via back:
+      //    need to check whether this id would have caused a 404
+      nextCranyonCtrl.imageLoaded();
+      nextCranyonCtrl.resize();
     } 
-    // This cranyon does not exist in app cache
+
+    // Does not exist in app cache
     else {
-      currentCranyonCtrl.clearClickables();
-      currentCranyonCtrl.setIsActive(false);
       this.fetch(id);
-      rootscope.$apply();
     }
   }
 
@@ -190,10 +180,6 @@ class CranyonService {
 
   isLoading(loading) {
     this.loading = loading;
-  }
-
-  documentActiveCranyon(id) {
-    this.activeCranyon = id;
   }
 
   hasAlreadySeenThis(id) {

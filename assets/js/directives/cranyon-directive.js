@@ -66,7 +66,7 @@ class CranyonCtrl {
 
     this.clearClickables();
     this.CranyonService.inactivateCurrent.call(this.CranyonService);
-    this.CranyonService.documentActiveCranyon.call(this.CranyonService, this.cranyon.id);
+    this.CranyonService.activeCranyon = this.cranyon.id;
 
     this.setPageTitleToName();
     // update the browser history state with this state
