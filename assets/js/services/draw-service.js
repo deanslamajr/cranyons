@@ -5,103 +5,111 @@
 
 'use strict';
 
+import SVG from 'svgjs';
+
 /**
  * Draw service object for factory call
  */
 class DrawService {
-
-  /**
-   * Service constructor
-   */
-  constructor(Cranyons) {
-    this.CranyonService = Cranyons;
-
-    this.activeClickables = [];
-
-    this.paper;
+  createSVGDocument(id) {
+    return SVG(id);
   }
 
-  clearClickables() {
-    this.removeAllClickables();
-    this.removePaper();
-  }
-
-  removePaper() {
-    if (this.paper) {
-      try {
-        this.paper.remove();
-      }
-      catch(error) {
-        this.paper.delete;
-        console.log('error trying to invoke paper.remove():\n' + error);
-        console.log('deleted it instead');
-      }
+  createClickable({ document, clickable, imgDimensions }) {
+    switch (clickable.clickable.type) {
+      case 'svg':
+        return this.createPathClickable({ document, clickable, imgDimensions });
+      default:
+        throw new Error('Invalid Clickable type');
     }
   }
 
-  removeAllClickables() {
-    for(let curActive = 0; curActive<this.activeClickables.length; curActive++) {
-      this.activeClickables[curActive].remove();
+  createPathClickable({ document, clickable, imgDimensions }) {
+    const { id, clickable: { data: { points, color } } } = clickable;
+
+    const shape = this.generateShape(points, imgDimensions);
+
+    // Container that associates the base path and glow paths together
+    const set = document.set();
+
+    // Base clickable path attributes
+    const strokeColor = color;
+    const fillColor = 'clear';
+    const strokeWidth = 1;
+    const strokeOpacity = 1;
+
+    // Create base clickable path
+    const basePath = document
+      .path(shape)
+      .attr({
+        stroke: strokeColor,
+        'stroke-opacity': strokeOpacity, 
+        'stroke-width': strokeWidth,
+        fill: fillColor,
+        'fill-opacity': 0
+      });
+
+    set.add(basePath);
+
+    // 'Glow' clickable path attributes
+    const glowWidth = 10 + strokeWidth;
+    const glowContant = glowWidth / 2;
+  
+    // Create 'glow' clickable path
+    for (let i = 1; i < glowContant + 1; i++) {
+      set.add(
+          document
+            .path(shape)
+            .attr({
+              stroke: strokeColor,
+              fill: fillColor,
+              'fill-opacity': 0,
+              'stroke-linejoin': 'round',
+              'stroke-linecap': 'round',
+              'stroke-width': +(glowWidth / glowContant * i).toFixed(3),
+              opacity: +(strokeOpacity / glowContant).toFixed(3)
+            })
+      );
     }
-    this.activeClickables = [];
-  }
 
-  drawClickables(paper, clickables, imgDimensions, cranyonCtrl) {
-    this.paper = paper;
-    let clickable;
+    // for click handler identification
+    set.last().attr({ cranyon: id });
 
-    clickables.forEach(curValue => {
-      const shape = this.generateShape(curValue.clickable.data.points, imgDimensions);
-      clickable = this.paper.path(shape)
-        .attr({ 'stroke-opacity': 0, 
-                'stroke-width': 1,
-                'fill': 'clear',
-                'fill-opacity': 0});
-      clickable.node.onclick = cranyonCtrl.onClickableClick.bind(cranyonCtrl, curValue.id);
-      clickable.glow({color: curValue.clickable.data.color, width: 1.5, opacity: .25});  
-      this.activeClickables.push(clickable);
-    })
+    // Fade in/out animation
+    set.animate({ duration: 1000, delay: 1000 })
+      .attr({"stroke-opacity": 0})
+      .loop(true, true);
 
-    this.activeClickables.forEach((curValue, index) => {
-      curValue.shimmer = function (clickablesArrayPos) {
-          curValue.animate({stroke: clickables[clickablesArrayPos].clickable.data.color, "stroke-opacity": 5}, 250, curValue.shammer);
-      }.bind(this, index);
-      curValue.shammer = function (clickablesArrayPos) {
-          curValue.animate({stroke: '#FFFFFF', "stroke-opacity": 0}, 1000, curValue.shimmer);
-      }.bind(this, index)
-      curValue.shimmer();
-    })
+    return set;
   }
 
   generateShape(points, imgDimensions) {
-    let shape = {x: 0, y: 0, path: 'M '};
-    for(let curPoint = 0; curPoint < points.length; curPoint++) {
-      if (curPoint != 0) { shape.path += 'l ';}
-      shape = this.appendPartialPath(points[curPoint].x, points[curPoint].y, shape, imgDimensions); 
-    }
-    shape.path += "z"
-    return shape.path;
+    let path = points.map(
+      (point, index) => {
+        let snippet;
+
+        index === 0 
+          ? snippet = 'M '
+          : snippet = 'L ';
+
+        return Object.keys(point).reduce(
+          (snippet, dimension) => 
+            this.appendSnippetToPath(point[dimension], imgDimensions[dimension], snippet), 
+          snippet
+        );
+    });
+
+    path.push('Z');
+    
+    return path.join('');
   }
 
-  appendPartialPath(x, y, shape, imgDimensions) {
-    let calculated = imgDimensions.width * x;
-    let temp = Math.round(calculated);
-
-    calculated = temp - shape.x;
-    shape.x = temp;
-    shape.path += calculated + ' ';
-    calculated = imgDimensions.height * y;
-    temp = Math.round(calculated);
-    calculated = temp - shape.y;
-    shape.y = temp;
-    shape.path += calculated + ' ';
-    return shape
+  appendSnippetToPath(scaledDimension, imgDimension, snippet) {
+    let calculatedDimension = imgDimension * scaledDimension;
+    calculatedDimension = Math.round(calculatedDimension);
+    
+    return snippet + calculatedDimension + ' ';
   }
 }
-
-/**
- * Specify dependencies to be injected
- */
-DrawService.$inject = ['Cranyons'];
 
 export default DrawService;
