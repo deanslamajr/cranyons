@@ -37,7 +37,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "build": "npm run clean & webpack",
+    "build": "npm run clean & webpack --progress --colors --watch",
     "clean": "npm run rimraf -- public",
     "rimraf": "rimraf"
   },
