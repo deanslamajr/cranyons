@@ -35,7 +35,7 @@ const plugins = [
   }),
   new CommonsChunkPlugin({
     name: 'vendor',
-    filename: '[name].[hash].bundle.js',
+    filename: '[name].[hash].js',
     minChunks: Infinity
   }),
   new DefinePlugin(replacements)
@@ -71,7 +71,7 @@ module.exports = {
       'angular',
       'axios',
       'angular-animate',
-      'raphael',
+      'svgjs',
       'imagesloaded'
     ]
   },

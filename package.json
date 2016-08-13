@@ -14,7 +14,7 @@
     "imagesloaded": "^4.1.0",
     "mongojs": "^1.3.0",
     "nconf": "^0.8.4",
-    "raphael": "^2.1.4"
+    "svgjs": "^2.2.5"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",

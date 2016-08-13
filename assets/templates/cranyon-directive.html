@@ -1,3 +1,21 @@
-<div class='pic-container' pf-images-loaded='cranyon.loaded'>
-  <img ng-attr-id='{{ cranyon.cranyon.id }}' ng-show='cranyon.isActive' ng-src='{{cranyon.imageSrc}}'></img>
+<div
+  class='pic-container'
+  pf-images-loaded='ctrl.loaded'
+  ng-show='ctrl.isActive'
+> 
+  <!-- proxy is for triggering image-loaded event -->
+  <img 
+    class='proxy'
+    ng-attr-id='prxy-{{ ctrl.cranyon.id }}' 
+    ng-src='{{ ctrl.imageSrc }}' 
+  >
+  <section class='cranyon'>
+    <pf-clickables
+      class='clickable'
+      ng-attr-id='cryn-{{ ctrl.cranyon.id }}'
+      is-active='ctrl.isActive'
+      is-img-visible='ctrl.isImgVisible' 
+      cranyon='ctrl.cranyon'
+    ></pf-clickables>
+  </section>
 </div>

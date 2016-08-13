@@ -23,8 +23,7 @@ class CranyonService {
 
     this.cranyonsQueue = [];
 
-    this.loading = true;
-    this.isInitialLoad = true;
+    this.loadSpinner = this.window.document.querySelector('.load-spinner')
 
     this.futureCranyons = new Map();
     this.cranyonHistory = new Map();
@@ -116,6 +115,7 @@ class CranyonService {
   }
 
   clickableClicked(clickableID, currentCranyon) {
+    currentCranyon = currentCranyon || this.getActiveCranyonCtrl().cranyon;
     const cranyonUpNext = this.futureCranyons.get(currentCranyon.id).get(clickableID);
 
     this.window.history.pushState({id: cranyonUpNext.id}, '', '/' + cranyonUpNext.url);
@@ -123,7 +123,6 @@ class CranyonService {
     if (this.hasAlreadySeenThis(cranyonUpNext.id)) {
       const cranyonUpNextCtrl = this.cranyonHistory.get(cranyonUpNext.id);
       cranyonUpNextCtrl.imageLoaded();
-      cranyonUpNextCtrl.resize();
     }
     // haven't been to this cranyon yet
     else {
@@ -143,13 +142,8 @@ class CranyonService {
     return this.cranyonHistory.get(this.activeCranyon);
   }
 
-  setBackgroundImage(imageSrc) {
-    const el = this.window.document.querySelector('.letterbox')
-    el.style.backgroundImage = 'url("' + imageSrc + '")';
-  }
-
   backAction(rootscope, id) {
-    this.isLoading(true);
+    this.setLoading(true);
 
     const currentCranyonCtrl = this.getActiveCranyonCtrl();
     const nextCranyonCtrl = this.cranyonHistory.get(id);
@@ -157,7 +151,6 @@ class CranyonService {
     // Next cranyon exists in app cache
     if (nextCranyonCtrl) {
       nextCranyonCtrl.imageLoaded();
-      nextCranyonCtrl.resize();
     } 
 
     // Does not exist in app cache
@@ -176,8 +169,13 @@ class CranyonService {
     this.unregister(cranyonID);
   }
 
-  isLoading(loading) {
-    this.loading = loading;
+  setLoading(isLoading) {
+    if (isLoading) {
+      this.loadSpinner.style.visibility = 'visible';
+    }
+    else {
+      this.loadSpinner.style.visibility = 'hidden';
+    }
   }
 
   hasAlreadySeenThis(id) {
