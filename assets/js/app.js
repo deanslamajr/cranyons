@@ -11,16 +11,20 @@ import angular from 'angular';
 // Registers as angular module
 import 'angular-animate';
 
-import main from './app-main';
-import config from './app-config';
-
+import AppComponent from './app.component';
 import services    from './services';
 import directives  from './directives';
 
-let app = angular.module('app', [
+import main from './app-main';
+import config from './app-config';
+
+const root = angular.module('app', [
   'ngAnimate',
   services.name,
   directives.name
-]);
+])
+  .component('app', AppComponent)
+  .config(config)
+  .run(main);
 
-app.config(config).run(main);
+export default root;
