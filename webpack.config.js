@@ -71,8 +71,7 @@ module.exports = {
       'angular',
       'axios',
       'angular-animate',
-      'svgjs',
-      'imagesloaded'
+      'svgjs'
     ]
   },
 
