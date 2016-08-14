@@ -39,8 +39,7 @@ function link(scope, element, attributes, Ctrl) {
       y: Ctrl.window.innerHeight
     }
 
-    const imgTag = Ctrl.document.getElementById('prxy-' + Ctrl.cranyon.id);
-    const imgDimensions = Ctrl.Service.getImgSize(imgTag);
+    const imgDimensions = Ctrl.Service.getImgSize(Ctrl.cranyonImg);
 
     const clickablesContainerStyles = Ctrl.Service.createContainerStyles({ windowDimensions, imgDimensions });
     element.css(clickablesContainerStyles);
@@ -124,6 +123,7 @@ function Clickables() {
     controllerAs: 'ctrl',
     bindToController: true,
     scope: {
+      cranyonImg: '=',
       cranyon: '=',
       isImgVisible: '=',
       isActive: '='

@@ -32,15 +32,11 @@ class CranyonCtrl {
     // set cranyon data
     this.imageSrc = this.CranyonService.PICS_DOMAIN + this.cranyon.image;
 
+    this.cranyonImg = new Image();
+    this.cranyonImg.src = this.imageSrc;
+
     // register this controller with the cranyon service
     this.CranyonService.register(this.cranyon.id, this);
-
-    // Defines behavior of images-loaded directive
-    this.loaded = {
-      always: instance => {},
-      done:   instance => this.imageLoaded(),
-      fail:   instance => this.imageNotFound()
-    };
   }
 
   imageLoaded() {
@@ -101,7 +97,44 @@ function link(scope, element, attributes, Ctrl) {
     backgroundBlendMode: 'normal, overlay'
   };
 
+  function verifyImgLoaded(img) {
+    if (!img) {
+      return false;
+    }
+    if (img.naturalHeight + img.naturalWidth === 0) {
+      return false;
+    }
+    else if (img.width + img.height === 0) {
+      return false;
+    }
+    return true;
+  }
+
+  function handleImageLoaded() {
+    if (verifyImgLoaded(Ctrl.cranyonImg)) {
+      Ctrl.imageLoaded();
+    }
+    else {
+      Ctrl.imageNotFound();
+    }
+  }
+
   $section.css(cranyonBackground);
+
+  // case where cranyon image has loaded already
+  if (Ctrl.cranyonImg.complete) {
+    handleImageLoaded();
+  }
+  // if not loaded yet attach load event
+  else {
+    Ctrl.cranyonImg.onerror = () => {
+      Ctrl.imageNotFound();
+    };
+
+    Ctrl.cranyonImg.onload = () => {
+      handleImageLoaded();
+    };
+  }
 }
 
 /**
