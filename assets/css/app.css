@@ -10,13 +10,6 @@ body {
   background-color: black;
 }
 
-.proxy {
-  position: absolute;
-  visibility: hidden;
-  height: 1%;
-  width: 1%;
-}
-
 .clickable {
   overflow: hidden;
   position: absolute;
@@ -39,7 +32,7 @@ body {
 }
 
 .animate-show.ng-hide-add, .animate-show.ng-hide-remove {
-  transition: background 0.5s, opacity 0.5s, visibility 0.5s;
+  transition: background 0.3s, opacity 0.3s, visibility 0.3s;
 }
 
 .animate-show.ng-hide {

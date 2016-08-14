@@ -172,8 +172,10 @@ class CranyonService {
   setLoading(isLoading) {
     if (isLoading) {
       this.loadSpinner.style.visibility = 'visible';
+      this.loadSpinner.style.opacity = '.4';
     }
     else {
+      this.loadSpinner.style.opacity = '0';
       this.loadSpinner.style.visibility = 'hidden';
     }
   }
