@@ -48,6 +48,13 @@ class CranyonCtrl {
     this.window.history.replaceState({id: this.cranyon.id}, '', '');
 
     this.setIsActive(true);
+
+    // if this is the initial cranyon, remove the filler image
+    if (this.CranyonService.initialLoad) {
+      this.CranyonService.initialLoad = false;
+      const initialCranyon = this.document.getElementById('initial-cranyon');
+      initialCranyon.style.visibility = 'hidden';
+    }
   }
 
   imageNotFound() {
@@ -89,12 +96,7 @@ function link(scope, element, attributes, Ctrl) {
   const $section = element.find('section');
 
   const cranyonBackground = {
-    backgroundImage: 'url(' + Ctrl.imageSrc + '), url(' + Ctrl.imageSrc + ')',
-    backgroundSize: 'contain, cover',
-    backgroundRepeat: 'no-repeat, no-repeat',
-    backgroundPosition: 'center center',
-    backgroundColor: '#171717',
-    backgroundBlendMode: 'normal, overlay'
+    backgroundImage: 'url(' + Ctrl.imageSrc + '), url(' + Ctrl.imageSrc + ')'
   };
 
   function verifyImgLoaded(img) {

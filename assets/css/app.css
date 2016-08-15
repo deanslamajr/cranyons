@@ -19,6 +19,15 @@ body {
   position: absolute;
   height: 100%;
   width: 100%;
+  background-size: contain, cover;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center center;
+  background-color: #171717;
+  background-blend-mode: normal, overlay;
+}
+
+.initial-disappear {
+  transition: visibility 2s;
 }
 
 .pic-container {
@@ -32,7 +41,7 @@ body {
 }
 
 .animate-show.ng-hide-add, .animate-show.ng-hide-remove {
-  transition: background 0.3s, opacity 0.3s, visibility 0.3s;
+  transition: background 1s, opacity 1s, visibility 1s;
 }
 
 .animate-show.ng-hide {
