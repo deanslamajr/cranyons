@@ -31,7 +31,9 @@ const plugins = [
     template: __dirname + '/assets/index.ejs',
     filename: '../index.html',
     inject: 'body',
-    baseIconURL: envConfig.get('BASE_ICON_URL')
+    baseIconURL: envConfig.get('BASE_ICON_URL'),
+    domains: JSON.stringify(constants.PICS_DOMAIN),
+    initialCranyonPath: constants.INITIAL_CRANYON.image
   }),
   new CommonsChunkPlugin({
     name: 'vendor',

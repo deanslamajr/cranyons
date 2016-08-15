@@ -24,6 +24,7 @@ class CranyonService {
     this.cranyonsQueue = [];
 
     this.loadSpinner = this.window.document.querySelector('.load-spinner')
+    this.initialLoad = true;
 
     this.futureCranyons = new Map();
     this.cranyonHistory = new Map();
