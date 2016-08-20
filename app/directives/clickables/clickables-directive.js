@@ -3,8 +3,6 @@
  * @module   clickables-directive
  */
 
-'use strict';
-
 /**
  * Directive controller
  * @class

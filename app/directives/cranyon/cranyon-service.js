@@ -3,8 +3,6 @@
  * @module   cranyon-service
  */
 
-'use strict';
-
 import axios from 'axios';
 
 /**

@@ -2,12 +2,9 @@
  * @overview Contains clickables
  * @module   cranyon-directive
  */
-
-'use strict';
-
 import angular from 'angular';
 
-import cranyonTemplate from '../../templates/cranyon-directive.html';
+import cranyonTemplate from './cranyon-directive.html';
 
 /**
  * Directive controller

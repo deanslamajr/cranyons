@@ -4,8 +4,6 @@
  * @requires nconf
  */
 
-'use strict';
-
 const nconf = require('nconf');
 
 const config = nconf
