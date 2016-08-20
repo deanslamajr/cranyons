@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * App config
  * @param  {Object} $compileProvider   

@@ -68,7 +68,7 @@ if (envConfig.get('NODE_ENV') === 'production') {
 
 module.exports = {
   entry: {
-    app: './assets/js/app.js',
+    app: './assets/app.js',
     vendor: [
       'angular',
       'axios',

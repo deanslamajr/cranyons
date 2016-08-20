@@ -3,9 +3,7 @@
  * @module   menu-directive
  */
 
-'use strict';
-
-import menuTemplate from '../../templates/menu-directive.html';
+import menuTemplate from './menu-directive.html';
 
 /**
  * Directive controller

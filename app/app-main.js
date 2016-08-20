@@ -1,5 +1,3 @@
-'use strict';
-
 const main = function($rootScope, $window, Cranyons) {
   const cranyonName = $window.location.pathname.split('/')[1];
   const backAction = Cranyons.backAction.bind(Cranyons, $rootScope);

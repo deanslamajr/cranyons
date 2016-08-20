@@ -3,8 +3,6 @@
  * @module   draw-service
  */
 
-'use strict';
-
 import SVG from 'svgjs';
 
 /**

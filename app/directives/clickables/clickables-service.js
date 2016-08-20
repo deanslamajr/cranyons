@@ -3,8 +3,6 @@
  * @module   clickables-service
  */
 
-'use strict';
-
 /**
  * Clickables service object for factory call
  */
