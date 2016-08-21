@@ -1,6 +1,6 @@
 /**
  * @overview Provides Clickables helper methods
- * @module   clickables-service
+ * @module   clickables.service
  */
 
 /**
@@ -10,10 +10,11 @@ class ClickablesService {
   /**
    * Service constructor
    */
-  constructor(Draw) {
-    this.Draw = Draw;
+  constructor(DrawService) {
+    this.Draw = DrawService;
 
     this.documentsMap = new Map();
+    this.registeredClickablesResizeFunction = null;
   }
 
   getImgSize(imgTag) {
@@ -110,6 +111,6 @@ class ClickablesService {
 /**
  * Specify dependencies to be injected
  */
-ClickablesService.$inject = ['Draw'];
+ClickablesService.$inject = ['DrawService'];
 
 export default ClickablesService;

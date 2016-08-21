@@ -1,10 +1,10 @@
 import angular from 'angular';
 
-import MenuDirective from './menu-directive';
+import MenuComponent from './menu.component';
 
 const menu = angular
   .module('menu', [])
-  .directive('pfMenu', MenuDirective)
+  .component('pfMenu', MenuComponent)
   .name;
 
 export default menu;

@@ -4,15 +4,15 @@
  */
 
 class AppCtrl {
-    constructor(Cranyons) {
-        this.cranyons = Cranyons.cranyonsQueue;
+    constructor(CranyonService) {
+        this.cranyons = CranyonService.cacheArray;
     }
 }
 
 /**
  * Specify dependencies to be injected
  */
-AppCtrl.$inject = ['Cranyons'];
+AppCtrl.$inject = ['CranyonService'];
 
 const AppComponent = {
   controller: AppCtrl,

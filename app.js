@@ -1,9 +1,11 @@
-var express     = require('express');
-var path 	      = require('path');
-var bodyParser  = require('body-parser');
-var router 	    = require('./routes');
+'use strict';
 
-var app = express();
+const express     = require('express');
+const path 	      = require('path');
+const bodyParser  = require('body-parser');
+const router 	    = require('./routes');
+
+const app = express();
 
 app.set('port', (process.env.PORT || 1337))
 
