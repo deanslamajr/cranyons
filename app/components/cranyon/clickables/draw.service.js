@@ -1,6 +1,6 @@
 /**
  * @overview Provides drawClickables method and related helper functions
- * @module   draw-service
+ * @module   draw.service
  */
 
 import SVG from 'svgjs';

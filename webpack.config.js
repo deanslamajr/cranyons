@@ -28,7 +28,7 @@ const replacements =  {
 const plugins = [
   new ExtractTextPlugin('style-[hash].css'),
   new HtmlWebpackPlugin({
-    template: __dirname + '/assets/index.ejs',
+    template: __dirname + '/app/index.ejs',
     filename: '../index.html',
     inject: 'body',
     baseIconURL: envConfig.get('BASE_ICON_URL'),
@@ -68,7 +68,7 @@ if (envConfig.get('NODE_ENV') === 'production') {
 
 module.exports = {
   entry: {
-    app: './assets/app.js',
+    app: './app/app.js',
     vendor: [
       'angular',
       'axios',
@@ -83,10 +83,6 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel'
-      },
-      {
-        test: /\.html$/,
-        loader: 'ng-cache'
       },
       {
         test:   /\.css$/,

@@ -8,7 +8,7 @@ import 'babel-polyfill';
 // Registers as angular module
 import 'angular-animate';
 
-import directives  from './directives';
+import components  from './components';
 
 import AppComponent from './app.component';
 
@@ -17,7 +17,7 @@ import main from './app-main';
 
 const root = angular.module('app', [
   'ngAnimate',
-  directives
+  components
 ])
   .component('app', AppComponent)
   .config(config)

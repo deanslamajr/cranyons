@@ -1,3 +1,5 @@
+'use strict';
+
 var express   = require('express');
 var mongojs   = require('mongojs');
 var path      = require('path');

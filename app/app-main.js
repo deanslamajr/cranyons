@@ -1,6 +1,6 @@
-const main = function($rootScope, $window, Cranyons) {
+const main = function($rootScope, $window, CranyonService) {
   const cranyonName = $window.location.pathname.split('/')[1];
-  const backAction = Cranyons.backAction.bind(Cranyons, $rootScope);
+  const backAction = CranyonService.backAction.bind(CranyonService, $rootScope);
 
   // attach back button listener
   $window.onpopstate = event => {
@@ -17,34 +17,33 @@ const main = function($rootScope, $window, Cranyons) {
 
   // handle bubbled up uncaught exceptions
   $window.onerror = event => {
-    const systemErrorCranyon = Cranyons.SYSTEM_ERROR_CRANYON;
+    const systemErrorCranyon = CranyonService.SYSTEM_ERROR_CRANYON;
 
     // update the browser history state with this state
     $window.history.pushState({id: systemErrorCranyon.id}, '', '/500');
 
     // 500 cranyon exists in app cache
-    if (Cranyons.hasAlreadySeenThis(systemErrorCranyon.id)) {
-      const cranyonUpNextCtrl = Cranyons.cranyonHistory.get(systemErrorCranyon.id);
-      cranyonUpNextCtrl.imageLoaded();
+    if (CranyonService.controllerCacheMap.has(systemErrorCranyon.id)) {
+      const cranyonUpNextCtrl = CranyonService.controllerCacheMap.get(systemErrorCranyon.id);
+      CranyonService.imageLoaded(cranyonUpNextCtrl);
     }
     // Does not exist in app cache
     else {
-      Cranyons.add(systemErrorCranyon);
+      CranyonService.addCranyonDSToApp(systemErrorCranyon);
     }
   };
 
   // client started at '/'
   if (!cranyonName) {
-    const init = Cranyons.INITIAL_CRANYON;
-    Cranyons.add(init);
-    Cranyons.fetchChildren(init);
+    const init = CranyonService.INITIAL_CRANYON;
+    CranyonService.addCranyonDSToApp(init);
   }
   // client-chosen initial cranyon
   else {
-    Cranyons.fetch(cranyonName, true);
+    CranyonService.fetch(cranyonName, true);
   }
 }
 
-main.$inject = ['$rootScope', '$window', 'Cranyons'];
+main.$inject = ['$rootScope', '$window', 'CranyonService'];
 
 export default main;

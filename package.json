@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Choose your own pic adventure Angular 1.x SPA",
   "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "build": "webpack --progress --colors",
+    "prebuild": "rimraf public"
+  },
   "dependencies": {
     "angular": "^1.5.7",
     "angular-animate": "^1.5.5",
@@ -26,19 +31,12 @@
     "eslint": "^2.13.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.21.0",
-    "ng-cache-loader": "0.0.16",
     "postcss-cssnext": "^2.7.0",
     "postcss-import": "^8.1.2",
     "postcss-loader": "^0.9.1",
     "rimraf": "^2.5.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1"
-  },
-  "scripts": {
-    "start": "node app.js",
-    "build": "npm run clean & webpack --progress --colors",
-    "clean": "npm run rimraf -- public",
-    "rimraf": "rimraf"
   },
   "author": "Dean Slama",
   "license": "ISC"
