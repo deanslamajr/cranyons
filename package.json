@@ -5,8 +5,11 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "build": "webpack --progress --colors",
-    "prebuild": "rimraf public"
+    "build": "webpack --config config/webpack.common.config.js --progress --colors --display-error-details",
+    "build:prod": "webpack --config config/webpack.production.config.js --progress --colors --display-error-details",
+    "prebuild": "rimraf public",
+    "prebuild:prod": "rimraf public",
+    "test": "karma start config/karma.conf.js --no-auto-watch --single-run --reporters spec"
   },
   "dependencies": {
     "angular": "^1.5.7",
@@ -26,17 +29,31 @@
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-0": "^6.5.0",
+    "chai": "^3.5.0",
     "compression-webpack-plugin": "^0.3.1",
     "css-loader": "^0.23.1",
     "eslint": "^2.13.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.21.0",
+    "karma": "^1.2.0",
+    "karma-babel-preprocessor": "^6.0.1",
+    "karma-chai-sinon": "^0.1.5",
+    "karma-mocha": "^1.1.1",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-spec-reporter": "0.0.26",
+    "karma-webpack": "^1.8.0",
+    "mocha": "^3.0.2",
     "postcss-cssnext": "^2.7.0",
     "postcss-import": "^8.1.2",
     "postcss-loader": "^0.9.1",
     "rimraf": "^2.5.2",
+    "sinon": "^1.17.5",
+    "sinon-as-promised": "^4.0.2",
+    "sinon-chai": "^2.8.0",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "webpack-merge": "^0.14.1"
   },
   "author": "Dean Slama",
   "license": "ISC"
