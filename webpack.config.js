@@ -2,7 +2,6 @@
 const HtmlWebpackPlugin  = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
-const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const CompressionPlugin = require('compression-webpack-plugin');
@@ -35,11 +34,6 @@ const plugins = [
     domains: JSON.stringify(constants.PICS_DOMAIN),
     initialCranyonPath: constants.INITIAL_CRANYON.image
   }),
-  new CommonsChunkPlugin({
-    name: 'vendor',
-    filename: '[name].[hash].js',
-    minChunks: Infinity
-  }),
   new DefinePlugin(replacements)
 ];
 
@@ -68,13 +62,7 @@ if (envConfig.get('NODE_ENV') === 'production') {
 
 module.exports = {
   entry: {
-    app: './app/app.js',
-    vendor: [
-      'angular',
-      'axios',
-      'angular-animate',
-      'svgjs'
-    ]
+    app: './app/app.js'
   },
 
   module: {
