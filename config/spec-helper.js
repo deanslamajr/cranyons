@@ -9,7 +9,11 @@ import 'sinon-as-promised';
  */
 const sandbox = sinon.sandbox.create();
 
+const noop = () => {};
+
 /**
  * Clean up sandbox
  */
 afterEach(() => sandbox.restore());
+
+global.noop = noop;
