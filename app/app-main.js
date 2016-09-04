@@ -1,37 +1,35 @@
-const main = function($rootScope, $window, CranyonService) {
+export function popState(service, event) {
+  // conditional exists to prevent an odd iOS bug
+  if (event && event.state) {
+    service.backAction(event.state.id);
+  }
+};
+
+export function handleUncaughtErrors(service, window, event) {
+  const systemErrorCranyon = service.SYSTEM_ERROR_CRANYON;
+
+  // update the browser history state with this state
+  window.history.pushState({id: systemErrorCranyon.id}, '', '/500');
+
+  // 500 cranyon exists in app cache
+  if (service.controllerCacheMap.has(systemErrorCranyon.id)) {
+    const cranyonUpNextCtrl = service.controllerCacheMap.get(systemErrorCranyon.id);
+    service.imageLoaded(cranyonUpNextCtrl);
+  }
+  // Does not exist in app cache
+  else {
+    service.addCranyonDSToApp(systemErrorCranyon);
+  }
+};
+
+export default function main($window, CranyonService) {
   const cranyonName = $window.location.pathname.split('/')[1];
-  const backAction = CranyonService.backAction.bind(CranyonService, $rootScope);
 
   // attach back button listener
-  $window.onpopstate = event => {
-    // conditional exists to prevent an odd iOS bug
-    if (event && event.state) {
-      backAction(event.state.id);
-    }
-  };
+  $window.onpopstate = popState.bind(null, CranyonService);
 
-  // handle bubbled up rejected promises
-  $window.onunhandledrejection = event => {
-    console.log('unhandled promise rejection!');
-  };
-
-  // handle bubbled up uncaught exceptions
-  $window.onerror = event => {
-    const systemErrorCranyon = CranyonService.SYSTEM_ERROR_CRANYON;
-
-    // update the browser history state with this state
-    $window.history.pushState({id: systemErrorCranyon.id}, '', '/500');
-
-    // 500 cranyon exists in app cache
-    if (CranyonService.controllerCacheMap.has(systemErrorCranyon.id)) {
-      const cranyonUpNextCtrl = CranyonService.controllerCacheMap.get(systemErrorCranyon.id);
-      CranyonService.imageLoaded(cranyonUpNextCtrl);
-    }
-    // Does not exist in app cache
-    else {
-      CranyonService.addCranyonDSToApp(systemErrorCranyon);
-    }
-  };
+  // handle all uncaught exceptions
+  $window.onerror = handleUncaughtErrors.bind(null, CranyonService, $window);
 
   // client started at '/'
   if (!cranyonName) {
@@ -44,6 +42,4 @@ const main = function($rootScope, $window, CranyonService) {
   }
 }
 
-main.$inject = ['$rootScope', '$window', 'CranyonService'];
-
-export default main;
+main.$inject = ['$window', 'CranyonService'];

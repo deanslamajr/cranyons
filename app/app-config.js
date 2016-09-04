@@ -1,11 +1,18 @@
 /**
  * App config
- * @param  {Object} $compileProvider   
+ * @param  {Object} $compileProvider 
+ * @param  {Object} $provide  
  */
-const config = function ($compileProvider) {
+export default function config($compileProvider, $provide) {
   $compileProvider.debugInfoEnabled(false);
+
+  // Rethrow all uncaught errors from Angular expressions e.g. inside $apply
+  // Let the top-level window.onerror listener handle these
+  $provide.decorator('$exceptionHandler', () => {
+    return (exception, cause) => {
+      throw new Error(exception);
+    };
+  });
 };
 
-config.$inject  = ['$compileProvider'];
-
-export default config;
+config.$inject  = ['$compileProvider', '$provide'];
