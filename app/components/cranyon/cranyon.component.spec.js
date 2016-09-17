@@ -6,30 +6,40 @@ describe('cranyon.component', () => {
   const elementMock = {};
   const cranyonServiceMock = {};
 
-  xcontext('$onInit', () => {
+  context('$onInit', () => {
     const domainMock = 'http://test.domain.com/';
     const imageMock = 'tester';
+    const cranyonMock = {
+      image: imageMock
+    };
 
-    cranyonServiceMock.PICS_DOMAIN = domainMock;
+    Object.assign(cranyonServiceMock, {
+      PICS_DOMAIN: domainMock,
+      cacheCranyonController: noop
+    })
 
     let cranyonCtrl;
 
     beforeEach(() => {
       cranyonCtrl = new CranyonCtrl(windowMock, scopeMock, elementMock, cranyonServiceMock);
+      cranyonCtrl.cranyon = cranyonMock;
     });
 
-    it('should construct the proper imageSrc for the current environment', () => {
-      cranyonCtrl.cranyon = {
-        image: imageMock
-      }
+    it('should set \'isActive\' property to false', () => {
+      cranyonCtrl.$onInit();
 
+      expect(cranyonCtrl.isActive).to.be.false;
     });
 
-    it('should create a new Image and set it\'s source property to imageSrc', () => {
+    it('should create a new Image and set it\'s source property to the proper imageSrc for the current environment', () => {
+      cranyonCtrl.$onInit();
 
+      expect(cranyonCtrl.imageSrc).to.equal(domainMock + imageMock);
+      expect(cranyonCtrl.cranyonImg).to.be.an.instanceof(Image);
+      expect(cranyonCtrl.cranyonImg.src).to.equal(domainMock + imageMock);
     });
 
-    it('should register itself with the cranyon service', () => {
+    xit('should register itself with the cranyon service', () => {
 
     });
   });
