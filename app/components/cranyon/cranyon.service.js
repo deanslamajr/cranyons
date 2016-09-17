@@ -202,7 +202,7 @@ class CranyonService {
     }
   }
 
-  backAction(rootscope, id) {
+  backAction(id) {
     this.setLoading(true);
 
     const currentCranyonCtrl = this.getActiveCranyonCtrl();

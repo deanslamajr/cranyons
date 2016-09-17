@@ -7,7 +7,7 @@
  * Component controller
  * @class
  */
-class CranyonCtrl {
+export class CranyonCtrl {
   /**
    * Controller constructor
    * @param  {Object} $window    AngularJS wrapper of browser object
@@ -21,7 +21,9 @@ class CranyonCtrl {
     this.element = $element;
 
     this.CranyonService = CranyonService;
+  }
 
+  $onInit() {
     this.isActive = false;
 
     // set cranyon data

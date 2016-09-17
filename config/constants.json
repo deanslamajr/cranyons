@@ -1,0 +1,112 @@
+{
+  "PICS_DOMAIN": {
+    "MOBILE": "http://mobile.pic4ward.com/",
+    "MAIN": "http://pics.pic4ward.com/",
+    "HIGH": "http://hires.pic4ward.com/"
+  },
+  "NOT_FOUND_CRANYON": {
+    "name": "Not Found",
+    "url": "404",
+    "id": "135ab1db-8003-4a68-86d6-96dd44dc77e9",
+    "image": "404.jpg",
+    "aspectRatio": 1.3,
+    "clickables": []
+  },
+  "SYSTEM_ERROR_CRANYON": {
+    "name": "Internal System Error",
+    "url": "500",
+    "id": "7864994e-3bef-11e6-ac61-9e71128cae77",
+    "image": "500.jpg",
+    "aspectRatio": 1.3,
+    "clickables": []
+  },
+  "INITIAL_CRANYON": {
+    "name": "FootHills Split",
+    "url": "foothillssplit",
+    "id": "628b4113-3eac-40e8-a795-0cba7ab53712",
+    "image": "foothillssplit.jpg",
+    "aspectRatio": 1.5,
+    "clickables": [
+        {
+            "id": "6bd0b450-ecd4-47fe-b366-3942e31bb9a3",
+            "clickable": {
+                "destImage": "sidewaystrailblaze.jpg",
+                "type": "svg",
+                "data": {
+                    "color": "#19D1FF",
+                    "points": [
+                        {
+                            "x": 0.3629989212513484,
+                            "y": 0.7888349514563107
+                        },
+                        {
+                            "x": 0.39104638619201726,
+                            "y": 0.8859223300970874
+                        },
+                        {
+                            "x": 0.378101402373247,
+                            "y": 0.8859223300970874
+                        },
+                        {
+                            "x": 0.37702265372168287,
+                            "y": 0.9797734627831716
+                        },
+                        {
+                            "x": 0.348975188781014,
+                            "y": 0.9781553398058253
+                        },
+                        {
+                            "x": 0.3478964401294498,
+                            "y": 0.8859223300970874
+                        },
+                        {
+                            "x": 0.33495145631067963,
+                            "y": 0.8859223300970874
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": "525c0b10-4564-45b1-bfef-f0e6ee406653",
+            "clickable": {
+                "destImage": "1.jpg",
+                "type": "svg",
+                "data": {
+                    "color": "#990000",
+                    "points": [
+                        {
+                            "x": 0.845063025210084,
+                            "y": 0.8551181102362204
+                        },
+                        {
+                            "x": 0.8692226890756303,
+                            "y": 0.9228346456692913
+                        },
+                        {
+                            "x": 0.8576680672268907,
+                            "y": 0.9228346456692913
+                        },
+                        {
+                            "x": 0.8576680672268907,
+                            "y": 0.9826771653543307
+                        },
+                        {
+                            "x": 0.8345588235294118,
+                            "y": 0.984251968503937
+                        },
+                        {
+                            "x": 0.8345588235294118,
+                            "y": 0.9228346456692913
+                        },
+                        {
+                            "x": 0.821953781512605,
+                            "y": 0.9228346456692913
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+  }
+}
