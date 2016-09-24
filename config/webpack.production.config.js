@@ -1,12 +1,12 @@
 const merge = require('webpack-merge');
 
-const common = require('./webpack.common.config')
+const nontest = require('./webpack.nontest.config')
 
 const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
-module.exports = merge(common, {
+module.exports = merge(nontest, {
   plugins: [
     new DedupePlugin(),
     new UglifyJsPlugin({

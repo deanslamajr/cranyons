@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "build": "webpack --config config/webpack.common.config.js --progress --colors --display-error-details",
+    "build": "webpack --config config/webpack.dev.config.js --progress --colors --display-error-details",
     "build:prod": "webpack --config config/webpack.production.config.js --progress --colors --display-error-details",
     "prebuild": "rimraf public",
     "prebuild:prod": "rimraf public",
@@ -24,6 +24,7 @@
     "svgjs": "^2.2.5"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.6.1",
     "babel-core": "^6.10.4",
     "babel-eslint": "^6.1.0",
     "babel-loader": "^6.2.4",
@@ -35,6 +36,7 @@
     "eslint": "^2.13.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.21.0",
+    "ignore-loader": "^0.1.1",
     "karma": "^1.2.0",
     "karma-babel-preprocessor": "^6.0.1",
     "karma-chai-sinon": "^0.1.5",

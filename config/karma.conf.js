@@ -11,10 +11,10 @@ module.exports = (config) => {
       'karma-mocha',
       'karma-chai-sinon',
       'karma-webpack',
-      'karma-phantomjs-launcher',
       'karma-spec-reporter',
       'karma-babel-preprocessor',
       'karma-sourcemap-loader',
+      'karma-phantomjs-launcher'
     ],
     files: [
       '../node_modules/babel-polyfill/dist/polyfill.js',
