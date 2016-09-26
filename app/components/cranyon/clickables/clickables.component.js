@@ -7,7 +7,7 @@
  * Component controller
  * @class
  */
-class ClickablesCtrl {
+export class ClickablesCtrl {
   /**
    * Controller constructor
    */
@@ -21,7 +21,9 @@ class ClickablesCtrl {
     this.CranyonService = CranyonService;
 
     this.document = this.window.document;
+  }
 
+  $onInit() {
     this.bindResize();
   }
 

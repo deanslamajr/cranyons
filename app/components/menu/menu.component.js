@@ -7,7 +7,7 @@
  * Component controller
  * @class
  */
-class MenuCtrl {
+export class MenuCtrl {
   /**
    * Controller constructor
    */
@@ -40,6 +40,6 @@ const menu = {
       <div class='menu-page animate-show' ng-show='$ctrl.isActive'></div>
     </div>
   `
-}
+};
 
 export default menu;

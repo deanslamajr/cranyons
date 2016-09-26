@@ -25,8 +25,8 @@ class ClickablesService {
   }
 
   isWindowGreatorAspect({ windowDimensions, imgDimensions }) {
-    const imgAspect = imgDimensions.x / imgDimensions.y;
     const windowAspect = windowDimensions.x / windowDimensions.y;
+    const imgAspect = imgDimensions.x / imgDimensions.y;
 
     return windowAspect >= imgAspect;
   }

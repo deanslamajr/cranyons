@@ -29,8 +29,8 @@
       window.cranyons.cache.push(new Image());
       window.cranyons.name = window.location.pathname.split('/')[1];
       window.cranyons.cache[0].src = window.cranyons.name
-        ? window.cranyons.domain + window.cranyons.name.toLowerCase() + '.jpg'
-        : window.cranyons.domain + '<%= htmlWebpackPlugin.options.initialCranyonPath %>';
+        ? window.cranyons.domain + '/' + window.cranyons.name.toLowerCase() + '.jpg'
+        : window.cranyons.domain + '/' + '<%= htmlWebpackPlugin.options.initialCranyonPath %>';
       window.cranyons.cache[0].onload = function() {
         var initialCranyon = document.getElementById('initial-cranyon');
         var initialCranyonURL = 'url(' + window.cranyons.cache[0].src + ')';
