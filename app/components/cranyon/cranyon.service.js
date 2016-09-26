@@ -101,12 +101,17 @@ class CranyonService {
     this.controllerCacheMap.delete(id);
   }
 
+  setCranyonCtrlAsActive(controller) {
+    controller.setIsActive(true);
+    this.activeCranyonID = controller.cranyon.id;
+  }
+
   getActiveCranyonCtrl() {
     return this.controllerCacheMap.get(this.activeCranyonID);
   }
 
   inactivateCurrentActiveCranyon() {
-    const currentActiveCtrl = this.controllerCacheMap.get(this.activeCranyonID);
+    const currentActiveCtrl = this.getActiveCranyonCtrl();
     if (currentActiveCtrl) {
       currentActiveCtrl.setIsActive(false);
     }
@@ -127,7 +132,9 @@ class CranyonService {
    */
   discardCranyonDSFromCacheArray(id) {
     const index = this.cacheArray.findIndex((element) => element.id === id)
-    this.cacheArray.splice(index, 1);
+    if (index != -1) {
+      this.cacheArray.splice(index, 1);
+    }
   }
 
   verifyImgLoaded(img) {
@@ -168,9 +175,7 @@ class CranyonService {
 
   imageLoaded(controller) {
     this.inactivateCurrentActiveCranyon();
-    this.activeCranyonID = controller.cranyon.id;
-
-    controller.setIsActive(true);
+    this.setCranyonCtrlAsActive(controller);
 
     // update title of page
     this.document.title = 'Cranyons - ' + controller.cranyon.name;
