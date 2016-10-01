@@ -6,11 +6,11 @@ import CranyonService from './cranyon.service';
 const axiosMock = new MockAdaptor(axios);
 
 describe('cranyon.service', () => {
-  const querySelectorSpy = sinon.spy();
+  const querySelectorStub = sinon.stub().returns({ style: {} });
 
   const windowMock = {
     document: {
-      querySelector: querySelectorSpy,
+      querySelector: querySelectorStub,
       getElementById: noop
     },
     history: {
@@ -27,10 +27,6 @@ describe('cranyon.service', () => {
   })
 
   context('constructor', () => {
-    beforeEach(() => {
-
-    });
-
     it('should initialize activeCranyonID to null', () => {
       expect(cranyonService.activeCranyonID).to.be.null;
     });
@@ -51,7 +47,7 @@ describe('cranyon.service', () => {
     });
 
     it('should initialize loadSpinner to the load spinner element', () => {
-      querySelectorSpy.should.have.been.calledWith('.load-spinner');
+      querySelectorStub.should.have.been.calledWith('.load-spinner');
     });
 
     it('should initialize PICS_DOMAIN to the constant associated with the current screen width', () => {
@@ -672,27 +668,65 @@ describe('cranyon.service', () => {
     });
   });
 
-  xcontext('backAction', () => {
-    it('should set the loading state to true', () => {
+  context('backAction', () => {
+    const idMock = 473829;
 
+    const cranyonCtrlMock = { data: 'controller data' };
+
+    beforeEach(() => {
+      cranyonService.setLoading = noop;
+      cranyonService.getActiveCranyonCtrl = noop;
+      cranyonService.imageLoaded = noop;
+      cranyonService.fetch = noop;
+    });
+
+    it('should set the loading state to true', () => {
+      const setLoadingSpy = sinon.spy();
+      cranyonService.setLoading = setLoadingSpy;
+
+      cranyonService.backAction();
+      setLoadingSpy.should.have.been.calledWith(true);
     });
 
     it('should invoke service.imageLoaded ONLY if the previous cranyon is in the app cache', () => {
+      const imageLoadedSpy = sinon.spy();
 
+      cranyonService.imageLoaded = imageLoadedSpy;
+
+      cranyonService.backAction(idMock);
+      imageLoadedSpy.should.not.have.been.called;
+
+      cranyonService.controllerCacheMap.set(idMock, cranyonCtrlMock);
+
+      cranyonService.backAction(idMock);
+      imageLoadedSpy.should.have.been.calledWith(cranyonCtrlMock);
     });
 
     it('should invoke service.fetch ONLY if the previous cranyon is NOT in the app cache', () => {
+      const fetchSpy = sinon.spy();
+      cranyonService.fetch = fetchSpy;
 
+      cranyonService.controllerCacheMap.set(idMock, cranyonCtrlMock);
+
+      cranyonService.backAction(idMock);
+      fetchSpy.should.not.have.been.called;
+
+      cranyonService.controllerCacheMap.delete(idMock);
+
+      cranyonService.backAction(idMock);
+      fetchSpy.should.have.been.calledWith(idMock);
     });
   });
 
-  xcontext('setLoading()', () => {
+  context('setLoading()', () => {
     it('should show the loadSpinner ONLY if a truthy value is passed', () => {
-
+      cranyonService.setLoading(true);
+      expect(cranyonService.loadSpinner.style.visibility).to.equal('visible');
     });
 
     it('should show the loadSpinner ONLY if a falsey value is passed', () => {
-
+      cranyonService.setLoading(false);
+      expect(cranyonService.loadSpinner.style.visibility).to.equal('hidden');
     });
   });
 });
