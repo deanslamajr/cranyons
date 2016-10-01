@@ -10,7 +10,12 @@ describe('cranyon.service', () => {
 
   const windowMock = {
     document: {
-      querySelector: querySelectorSpy
+      querySelector: querySelectorSpy,
+      getElementById: noop
+    },
+    history: {
+      replaceState: noop,
+      pushState: noop
     }
   };
   const timeoutMock = {};
@@ -22,6 +27,10 @@ describe('cranyon.service', () => {
   })
 
   context('constructor', () => {
+    beforeEach(() => {
+
+    });
+
     it('should initialize activeCranyonID to null', () => {
       expect(cranyonService.activeCranyonID).to.be.null;
     });
@@ -515,39 +524,151 @@ describe('cranyon.service', () => {
     });
   })
 
-  xcontext('imageLoaded()', () => {
-    it('should inactivate the current active cranyon', () => {
+  context('imageLoaded()', () => {
+    const inactivateCurrentActiveCranyonSpy = sinon.spy();
+    const setCranyonCtrlAsActiveSpy = sinon.spy();
 
+    const nameMock = 'testerCranyon';
+    const idMock = 65432;
+
+    const controllerMock = {
+      cranyon: {
+        name: nameMock,
+        id: idMock
+      }
+    };
+
+    beforeEach(() => {
+      inactivateCurrentActiveCranyonSpy.reset();
+      setCranyonCtrlAsActiveSpy.reset();
+
+      cranyonService.inactivateCurrentActiveCranyon = inactivateCurrentActiveCranyonSpy;
+      cranyonService.setCranyonCtrlAsActive = setCranyonCtrlAsActiveSpy;
+
+      cranyonService.document.getElementById = sinon.stub().returns({ style: {} });
+    });
+
+    it('should inactivate the current active cranyon', () => {
+      cranyonService.imageLoaded(controllerMock);
+      inactivateCurrentActiveCranyonSpy.should.have.been.called;
     });
 
     it(`should set the passed in controller as 'active'`, () => {
-
+      cranyonService.imageLoaded(controllerMock);
+      setCranyonCtrlAsActiveSpy.should.have.been.calledWith(controllerMock);
     });
 
     it('should update the title of the page to the name associated with the passed in controller', () => {
-
+      cranyonService.imageLoaded(controllerMock);
+      expect(cranyonService.document.title).to.equal('Cranyons - ' + nameMock);
     });
 
     it('should update the browser history with the new state', () => {
+      const replaceStateSpy = sinon.spy();
+      cranyonService.window.history.replaceState = replaceStateSpy;
 
+      cranyonService.imageLoaded(controllerMock);
+      replaceStateSpy.should.have.been.calledWith({ id: idMock }, '', '' );
     });
 
-    it('should remove the filler image if this is the initial cranyon', () => {
+    it('should set this.initialLoad to false', () => {
+      cranyonService.imageLoaded(controllerMock);
+      expect(cranyonService.initialLoad).to.be.false;
+    });
 
+    it('should hide the filler image if this is the initial load', () => {
+      const actualStyle = {};
+      const expectedStyle = { visibility: 'hidden' };
+      cranyonService.document.getElementById = sinon.stub().returns({ style: actualStyle });
+
+      cranyonService.imageLoaded(controllerMock);
+      expect(actualStyle).to.deep.equal(expectedStyle);
     });
   });
 
-  xcontext('clickableClicked()', () => {
-    it('should update the browser history with the next cranyon', () => {
+  context('clickableClicked()', () => {
+    const passedInID = 123890;
+    const mockId = 909090;
+    const nextId = 887766;
+    const activeID = 556677;
+    const otherPassedID = 334499;
 
+    const nextUrl = 'theNextCranyon';
+    const activeUrl = 'active';
+
+    const cranyonMock = {
+      id: mockId
+    };
+
+    const nextCranyonMock = {
+      id: nextId,
+      url: nextUrl
+    };
+
+    const anotherNextCranyonMock = {
+      id: activeID,
+      url: activeUrl
+    };
+
+    const nextCacheMock = new Map([[passedInID, nextCranyonMock]]);
+    const otherNextCacheMock = new Map([[otherPassedID, anotherNextCranyonMock]]);
+    const childrenCacheMapMock = new Map([[mockId, nextCacheMock], [activeID, otherNextCacheMock]]);
+
+    const pushStateSpy = sinon.spy();
+    windowMock.history.pushState = pushStateSpy;
+
+    let getActiveCranyonCtrlStub;
+
+    beforeEach(() => {
+      pushStateSpy.reset();
+      cranyonService.childrenCacheMap = childrenCacheMapMock;
+      cranyonService.addCranyonDSToApp = noop;
+
+      getActiveCranyonCtrlStub = sinon.stub().returns({ cranyon: { id: activeID } });
+
+      cranyonService.getActiveCranyonCtrl = getActiveCranyonCtrlStub;
+    });
+
+    it('should update the browser history with ID of the cranyon passed in', () => {
+      cranyonService.clickableClicked(passedInID, cranyonMock);
+      pushStateSpy.should.have.been.calledWith({ id: nextId }, '', `/${nextUrl}`);
+    });
+
+    it('should update the browser history with ID of the active cranyon if a cranyon is not passed in', () => {
+      cranyonService.clickableClicked(otherPassedID);
+      pushStateSpy.should.have.been.calledWith({ id: activeID }, '', `/${activeUrl}`);
     });
 
     it('should invoke service.imageLoaded with the next cranyon ONLY if the next cranyon is in the app cache', () => {
+      const imageLoadedSpy = sinon.spy();
+      cranyonService.imageLoaded = imageLoadedSpy;
 
+      cranyonService.clickableClicked(otherPassedID);
+      imageLoadedSpy.should.not.have.been.calledWith(upNextCtrlMock);
+
+      const upNextCtrlMock = { data: 'somethings' };
+      cranyonService.controllerCacheMap.set(activeID, upNextCtrlMock);
+
+      cranyonService.clickableClicked(otherPassedID);
+      imageLoadedSpy.should.have.been.calledWith(upNextCtrlMock);
     });
 
     it('should invoke service.addCranyonDSToApp with the next cranyon ONLY if the next cranyon is NOT in the app cache', () => {
+      cranyonService.imageLoaded = noop;
 
+      const addCranyonDSToAppSpy = sinon.spy();
+      cranyonService.addCranyonDSToApp = addCranyonDSToAppSpy;
+
+      const upNextCtrlMock = { data: 'somethings' };
+      cranyonService.controllerCacheMap.set(activeID, upNextCtrlMock);
+
+      cranyonService.clickableClicked(otherPassedID);
+      addCranyonDSToAppSpy.should.not.have.been.called;
+
+      cranyonService.controllerCacheMap.delete(activeID);
+
+      cranyonService.clickableClicked(otherPassedID);
+      addCranyonDSToAppSpy.should.have.been.calledWith(anotherNextCranyonMock);
     });
   });
 
