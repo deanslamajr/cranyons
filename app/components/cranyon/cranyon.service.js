@@ -210,7 +210,6 @@ class CranyonService {
   backAction(id) {
     this.setLoading(true);
 
-    const currentCranyonCtrl = this.getActiveCranyonCtrl();
     const nextCranyonCtrl = this.controllerCacheMap.get(id);
 
     // Next cranyon exists in app cache
