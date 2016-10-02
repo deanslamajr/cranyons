@@ -3,6 +3,8 @@
  * @module   clickables.component
  */
 
+import angular from 'angular';
+
 /**
  * Component controller
  * @class
@@ -12,6 +14,7 @@ export class ClickablesCtrl {
    * Controller constructor
    */
   constructor($window, $scope, $compile, $element, ClickablesService, CranyonService) {
+    this.angular = angular;
     this.window = $window;
     this.scope = $scope;
     this.compile = $compile;
@@ -70,16 +73,24 @@ export class ClickablesCtrl {
     });
 
     // Bind click actions to clickables
-    this.clickables.map(set => {
-      const elementWithOnClick = set.last().node;
-      const cranyonID = set.last().attr('cranyon');
+    this.clickables.map(this.bindClickAction.bind(this));
+  }
 
-      const $element = angular.element(elementWithOnClick);
-      
-      // add angular click directive to clickable and make angular runtime aware of this
-      $element.attr('ng-click', '$ctrl.onClickableClick("' + cranyonID + '")');
-      this.scope.$applyAsync(this.compile($element)(this.scope));
-    })
+  bindClickAction(set) {
+    const elementWithOnClick = set.last().node;
+    const cranyonID = set.last().attr('cranyon');
+
+    const $element = this.angular.element(elementWithOnClick);
+    
+    this.addClickBindingToAngularRuntime($element, cranyonID);
+  }
+
+  /**
+   * Add angular click directive to clickable and make angular runtime aware of this
+   **/
+  addClickBindingToAngularRuntime($element, id) {
+    $element.attr('ng-click', '$ctrl.onClickableClick("' + id + '")');
+    this.scope.$applyAsync(this.compile($element)(this.scope));
   }
 
   bindResize() {

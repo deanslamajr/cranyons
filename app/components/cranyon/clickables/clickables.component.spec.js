@@ -172,21 +172,101 @@ describe('clickables.component', () => {
     });
   });
 
-  xcontext('setupClickables()', () => {
-    xit('should set the styles of its children', () => {
+  context('setupClickables()', () => {
+    Object.assign(windowMock, {
+      innerWidth: 123,
+      innerHeight: 456
+    });
+    
+    const clickablesArrayMock = [
+      'an',
+      'assortment',
+      'of',
+      'clickables'
+    ];
 
+    const drawClickablesStub = sinon.stub().returns(clickablesArrayMock);
+
+    const cssSpy = sinon.spy();
+
+    beforeEach(() => {
+      ClickablesServiceMock.getImgSize = noop;
+      ClickablesServiceMock.createContainerStyles = noop;
+      ClickablesServiceMock.createSVGDocument = noop;
+      ClickablesServiceMock.drawClickables = drawClickablesStub;
+
+      clickablesCtrl.cranyon = {
+        id: 'some-universally-unique-id',
+        clickables: []
+      }
+
+      clickablesCtrl.bindClickAction = noop;
+
+      elementMock.children = () => ({ css: cssSpy });
     });
 
-    xit('should create a new SVG document', () => {
-
+    afterEach(() => {
+      drawClickablesStub.reset();
+      cssSpy.reset();
     });
 
-    xit('should create a new set of clickables', () => {
-
+    it('should set the styles of its children', () => {
+      const stylesMock = { data: 'someMinimalistChildrenStyles' };
+      const createContainerStylesStub = sinon.stub().returns(stylesMock);
+      ClickablesServiceMock.createContainerStyles = createContainerStylesStub;
+      
+      clickablesCtrl.setupClickables();
+      cssSpy.should.have.been.calledWith(stylesMock);
     });
 
-    xit('should add an ng-click attirbute to all of the clickables', () => {
+    it('should create a new SVG document', () => {
+      const svgDocMock = { data: 'SVG stuff' };
+      const createSVGDocumentStub = sinon.stub().returns(svgDocMock);
+      ClickablesServiceMock.createSVGDocument = createSVGDocumentStub;
 
+      clickablesCtrl.setupClickables();
+      createSVGDocumentStub.should.have.been.called;
+
+      expect(clickablesCtrl.svgDocument).to.deep.equal(svgDocMock);
+    });
+
+    it('should create a new set of clickables', () => {
+      clickablesCtrl.setupClickables();
+      drawClickablesStub.should.have.been.called;
+
+      expect(clickablesCtrl.clickables).to.deep.equal(clickablesArrayMock);
+    });
+
+    it('should invoke bindClickAction for each member of this.clickables', () => {
+      const bindClickActionSpy = sinon.spy();
+      clickablesCtrl.bindClickAction = bindClickActionSpy;
+
+      clickablesCtrl.setupClickables();
+      expect(bindClickActionSpy.callCount).to.equal(clickablesArrayMock.length);
+    });
+  });
+
+  context('bindClickAction()', () => {
+    const $elementMock = { data: 'dummy-$element' };
+    const cranyonIDMock = 'dummy-cranyon-ID';
+
+    const setMock = {
+      last: () => ({
+        node: '',
+        attr: sinon.stub().returns(cranyonIDMock)
+      })
+    };
+
+    it('should add a click binding to the passed SVG set', () => {
+      clickablesCtrl.angular = {
+        element: sinon.stub().returns($elementMock, cranyonIDMock)
+      };
+
+      const addClickBindingToAngularRuntimeSpy = sinon.spy();
+      clickablesCtrl.addClickBindingToAngularRuntime = addClickBindingToAngularRuntimeSpy;
+
+      clickablesCtrl.bindClickAction(setMock);
+      addClickBindingToAngularRuntimeSpy.should.have.been.calledWith($elementMock, cranyonIDMock);
     });
   });
 
