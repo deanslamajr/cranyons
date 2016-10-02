@@ -17,7 +17,7 @@ const replacements =  {
 }
 
 module.exports = merge.smart(common, {
-  devtool: 'inline-source-map',
+  devtool: 'cheap-eval-source-map',
 
   module: {
     loaders: [
