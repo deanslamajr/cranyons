@@ -7,7 +7,8 @@ describe('clickables.component', () => {
   const elementMock = {};
   const ClickablesServiceMock = {};
   const CranyonServiceMock = {
-    setLoading: noop
+    setLoading: noop,
+    clickableClicked: noop
   };
 
   let clickablesCtrl;
@@ -44,13 +45,9 @@ describe('clickables.component', () => {
     const removeSpy = sinon.spy();
     const setupClickablesSpy = sinon.spy();
     const setLoadingSpy = sinon.spy();
-
-    CranyonServiceMock.setLoading = setLoadingSpy;
+    const bindResizeSpy = sinon.spy();
 
     beforeEach(() => {
-      clickablesCtrl.bindResize = noop;
-      clickablesCtrl.setupClickables = noop;
-
       clickablesCtrl.cranyon = {
         id: idMock
       };
@@ -60,12 +57,16 @@ describe('clickables.component', () => {
       };
 
       clickablesCtrl.setupClickables = setupClickablesSpy;
+      clickablesCtrl.bindResize = bindResizeSpy;
 
       removeSpy.reset();
       setupClickablesSpy.reset();
       setLoadingSpy.reset();
+      bindResizeSpy.reset();
 
       ClickablesServiceMock.documentsMap = new Map();
+
+      CranyonServiceMock.setLoading = setLoadingSpy;
     });
 
     context('if isImgVisible changes to a truthy value', () => {
@@ -100,6 +101,11 @@ describe('clickables.component', () => {
       it('should set the loading state to false', () => {
         clickablesCtrl.$onChanges(visible);
         setLoadingSpy.should.have.been.calledWith(false);
+      });
+
+      it('should add the associated resize function to the window resize event', () => {
+        clickablesCtrl.$onChanges(visible);
+        bindResizeSpy.should.have.been.called;
       });
     });
 
@@ -136,20 +142,33 @@ describe('clickables.component', () => {
         clickablesCtrl.$onChanges(notVisible);
         setLoadingSpy.should.not.have.been.called;
       });
+
+      it('should NOT add the associated resize function to the window resize event', () => {
+        clickablesCtrl.$onChanges(notVisible);
+        bindResizeSpy.should.not.have.been.called;
+      });
     });    
-
-    xit('should invoke this.bindResize', () => {
-
-    });
   });
 
-  xcontext('onClickableClick()', () => {
-    xit('should set the loading state to true', () => {
+  context('onClickableClick()', () => {
+    const idMock = 'just-another-id';
+    
+    const setLoadingSpy = sinon.spy();
+    const clickableClickedSpy = sinon.spy();
 
+    beforeEach(() => {
+      CranyonServiceMock.setLoading = setLoadingSpy;
+      CranyonServiceMock.clickableClicked = clickableClickedSpy
     });
 
-    xit('should invoke cranyonService.clickableClicked with the passed id', () => {
+    it('should set the loading state to true', () => {
+      clickablesCtrl.onClickableClick(idMock);
+      setLoadingSpy.should.have.been.calledWith(true);
+    });
 
+    it('should invoke cranyonService.clickableClicked with the passed id', () => {
+      clickablesCtrl.onClickableClick(idMock);
+      clickableClickedSpy.should.have.been.calledWith(idMock);
     });
   });
 
