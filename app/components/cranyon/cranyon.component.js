@@ -53,7 +53,7 @@ export class CranyonCtrl {
     // if not loaded yet attach load event
     else {
       this.cranyonImg.onerror = () => {
-        this.CranyonService.imageNotFound();
+        this.CranyonService.imageNotFound(this);
       };
 
       this.cranyonImg.onload = () => {
