@@ -12,9 +12,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin  = require('html-webpack-plugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 
-// App environment variables
-const envConfig = require('../environment-config');
-
 // App constants
 const constants = require('./constants');
 
@@ -31,7 +28,7 @@ const plugins = [
     template: __dirname + '/../app/index.ejs',
     filename: '../index.html',
     inject: 'body',
-    baseIconURL: envConfig.get('BASE_ICON_URL'),
+    baseIconURL: JSON.stringify(constants.BASE_ICON_URL),
     domains: JSON.stringify(constants.PICS_DOMAIN),
     initialCranyonPath: constants.INITIAL_CRANYON.image
   }),

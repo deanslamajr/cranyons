@@ -6,5 +6,6 @@
     "MOBILE": "<domain-of-mobile-optimized-pic-bucket>",
     "MAIN": "<domain-of-main-pic-bucket>",
     "HIGH": "<domain-of-hi-res-pic-bucket>"
-  }
+  },
+  "BASE_ICON_URL": "<base url that favicon is found at>"
 }

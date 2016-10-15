@@ -1,0 +1,8 @@
+{
+  "NODE_ENV": "dev",
+  "MONGO_SUBDOMAIN": "ds043952",
+  "MONGO_PORT": "43952",
+  "MONGO_USERNAME": "heroku_70wln8p7",
+  "MONGO_PASS": "1C2Sv5DqfuWla0uqCBae",
+  "MONGO_COLLECTION": "Cranyons"
+}
