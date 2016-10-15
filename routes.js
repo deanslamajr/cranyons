@@ -13,7 +13,7 @@ var mongoLoginString = envConfig.get('MONGO_USERNAME') + ':' + envConfig.get('MO
 var collection = envConfig.get('MONGO_COLLECTION');
 var mongoCollection  = [];
 mongoCollection.push(collection);
-var db = mongojs(mongoLoginString, mongoCollection, {authMechanism: 'ScramSHA1'});
+var db = mongojs(mongoLoginString, mongoCollection, {authMechanism: 'SCRAM-SHA-1'});
 
 function serveApp(response) {
   response.append('Cache-Control', 'no-cache, no-store, must-revalidate');
