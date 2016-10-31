@@ -1,5 +1,7 @@
-# built application
+# build/deploy assets
 public
+deploy
+build_packages
 
 # npm stuff
 node_modules
