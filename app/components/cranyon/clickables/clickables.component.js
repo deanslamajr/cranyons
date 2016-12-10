@@ -37,6 +37,10 @@ export class ClickablesCtrl {
         }
         this.setupClickables();
       }
+      // if they exist, we need to start them blinking again
+      else {
+        this.ClickablesService.addBlink(this.clickables);
+      }
 
       this.CranyonService.setLoading(false);
 

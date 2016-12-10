@@ -110,6 +110,10 @@ class ClickablesService {
   removeBlink(clickablesArray) {
     clickablesArray.map(this.Draw.removeBlinkClass);
   }
+
+  addBlink(clickablesArray) {
+    clickablesArray.map(this.Draw.addBlinkClass);
+  }
 }
 
 /**
