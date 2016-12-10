@@ -44,9 +44,10 @@ export class ClickablesCtrl {
     }
   }
 
-  onClickableClick(id) {
+  onClickableClick(id, clickables) {
     this.CranyonService.setLoading(true);
     this.CranyonService.clickableClicked(id);
+    this.ClickablesService.removeBlink(clickables);
   }
 
   setupClickables() {
@@ -77,9 +78,9 @@ export class ClickablesCtrl {
       const $element = angular.element(elementWithOnClick);
       
       // add angular click directive to clickable and make angular runtime aware of this
-      $element.attr('ng-click', '$ctrl.onClickableClick("' + cranyonID + '")');
+      $element.attr('ng-click', `$ctrl.onClickableClick('${cranyonID}', $ctrl.clickables)`);
       this.scope.$applyAsync(this.compile($element)(this.scope));
-    })
+    });
   }
 
   bindResize() {

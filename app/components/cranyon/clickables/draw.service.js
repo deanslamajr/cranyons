@@ -5,6 +5,8 @@
 
 import SVG from 'svgjs';
 
+const BLINK_CLASS = 'blinker';
+
 /**
  * Draw service object for factory call
  */
@@ -45,9 +47,7 @@ class DrawService {
         'stroke-width': strokeWidth,
         fill: fillColor,
         'fill-opacity': 0
-      })
-      // add animation class
-      .addClass('blinker');
+      });
 
     set.add(basePath);
 
@@ -69,15 +69,20 @@ class DrawService {
               'stroke-width': +(glowWidth / glowContant * i).toFixed(3),
               opacity: +(strokeOpacity / glowContant).toFixed(3)
             })
-            // add animation class
-            .addClass('blinker')
       );
     }
+
+    // add animation class
+    set.addClass(BLINK_CLASS)
 
     // for click handler identification
     set.last().attr({ cranyon: id });
 
     return set;
+  }
+
+  removeBlinkClass(set) {
+    set.removeClass(BLINK_CLASS);
   }
 
   generateShape(points, imgDimensions) {

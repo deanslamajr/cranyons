@@ -106,6 +106,10 @@ class ClickablesService {
       clickable => this.Draw.createClickable({ document: sVGdocument, clickable, imgDimensions: scaledImgDimensions })
     );
   }
+
+  removeBlink(clickablesArray) {
+    clickablesArray.map(this.Draw.removeBlinkClass);
+  }
 }
 
 /**
