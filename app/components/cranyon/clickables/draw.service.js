@@ -73,7 +73,7 @@ class DrawService {
     }
 
     // add animation class
-    set.addClass(BLINK_CLASS)
+    this.addBlinkClass(set);
 
     // for click handler identification
     set.last().attr({ cranyon: id });
@@ -83,6 +83,10 @@ class DrawService {
 
   removeBlinkClass(set) {
     set.removeClass(BLINK_CLASS);
+  }
+
+  addBlinkClass(set) {
+    set.addClass(BLINK_CLASS)
   }
 
   generateShape(points, imgDimensions) {
