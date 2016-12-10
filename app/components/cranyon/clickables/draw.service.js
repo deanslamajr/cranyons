@@ -45,7 +45,9 @@ class DrawService {
         'stroke-width': strokeWidth,
         fill: fillColor,
         'fill-opacity': 0
-      });
+      })
+      // add animation class
+      .addClass('blinker');
 
     set.add(basePath);
 
@@ -67,16 +69,13 @@ class DrawService {
               'stroke-width': +(glowWidth / glowContant * i).toFixed(3),
               opacity: +(strokeOpacity / glowContant).toFixed(3)
             })
+            // add animation class
+            .addClass('blinker')
       );
     }
 
     // for click handler identification
     set.last().attr({ cranyon: id });
-
-    // Fade in/out animation
-    set.animate({ duration: 1000, delay: 1000 })
-      .attr({"stroke-opacity": 0})
-      .loop(true, true);
 
     return set;
   }
