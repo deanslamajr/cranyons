@@ -36,6 +36,8 @@ export class MenuCtrl {
       this.scope.$applyAsync(() => {
         this.isActive = !this.isActive
       });
+
+      this.CranyonService.isMenuActive = !this.CranyonService.isMenuActive;
     });
   }
 }

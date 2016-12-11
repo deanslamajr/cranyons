@@ -28,6 +28,8 @@ class CranyonService {
     this.loadSpinner = this.document.querySelector('.load-spinner')
     this.initialLoad = true;
 
+    this.isMenuActive = false;
+
     // initialized by webpack/definePlugin
     this.PICS_DOMAIN = DP.PICS_DOMAIN;
     this.NOT_FOUND_CRANYON   = DP.NOT_FOUND_CRANYON;
@@ -207,7 +209,16 @@ class CranyonService {
     }
   }
 
-  backAction(id) {
+  backAction(id, event) {
+    // if menu is open, back action should close it
+    if (this.isMenuActive) {
+      const activeCranyon = this.getActiveCranyonCtrl();
+      this.document.querySelector('.menu-button').click();
+      this.isMenuActive = false;
+      this.window.history.pushState({id: activeCranyon.cranyon.id}, '', `/${activeCranyon.cranyon.url}`);
+      return;
+    }
+
     this.setLoading(true);
 
     // stop the clickables from blinking
