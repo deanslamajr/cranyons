@@ -237,9 +237,16 @@ class CranyonService {
     }
   }
 
-  toggleClickablesBlinking() {
+  toggleClickablesBlinking(shouldDelay) {
     const currentActive = this.getActiveCranyonCtrl();
-    currentActive.setBlinking(!currentActive.isBlinking);
+
+    const delayDuration = shouldDelay
+        ? 1000
+        : 0;
+
+    this.timeout(() => {
+      currentActive.setBlinking(!currentActive.isBlinking);
+    }, delayDuration);
   }
 
   setLoading(isLoading) {

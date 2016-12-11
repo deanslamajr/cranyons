@@ -11,10 +11,9 @@ export class MenuCtrl {
   /**
    * Controller constructor
    */
-  constructor($scope, $element, $timeout, CranyonService) {
+  constructor($scope, $element, CranyonService) {
     this.scope = $scope;
     this.element = $element;
-    this.timeout = $timeout;
 
     this.CranyonService = CranyonService;
 
@@ -25,13 +24,7 @@ export class MenuCtrl {
     const menuButton = this.element[0].querySelector('.menu-button');
 
     menuButton.addEventListener('click', () => {
-      const delay = this.isActive
-        ? 1000
-        : 0;
-        
-      this.timeout(() => {
-        this.CranyonService.toggleClickablesBlinking();
-      }, delay);
+      this.CranyonService.toggleClickablesBlinking(this.isActive);
 
       this.scope.$applyAsync(() => {
         this.isActive = !this.isActive
@@ -45,7 +38,7 @@ export class MenuCtrl {
 /**
  * Specify dependencies to be injected
  */
-MenuCtrl.$inject = ['$scope', '$element', '$timeout', 'CranyonService'];
+MenuCtrl.$inject = ['$scope', '$element', 'CranyonService'];
 
 const menu = {
   controller: MenuCtrl,
