@@ -39,7 +39,7 @@ export class ClickablesCtrl {
       }
       // if they exist, we need to start them blinking again
       else {
-        this.ClickablesService.addBlink(this.clickables);
+        this.ClickablesService.resumeBlink(this.clickables);
         // set cranyon.isBlinking to true
         this.resetBlinking();
       }
@@ -50,18 +50,18 @@ export class ClickablesCtrl {
     }
 
     if (changes.isBlinking && !changes.isBlinking.currentValue) {
-      this.removeBlink();
+      this.pauseBlink();
     }
   }
 
   onClickableClick(id, clickables) {
     this.CranyonService.setLoading(true);
     this.CranyonService.clickableClicked(id);
-    this.removeBlink();
+    this.pauseBlink();
   }
 
-  removeBlink() {
-    this.ClickablesService.removeBlink(this.clickables);
+  pauseBlink() {
+    this.ClickablesService.pauseBlink(this.clickables);
   }
 
   setupClickables() {
