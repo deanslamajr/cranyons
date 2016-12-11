@@ -2,10 +2,6 @@ import ClickablesService from './clickables.service';
 
 describe('clickables.service', () => {
   xcontext('constructor()', () => {
-    xit('should initialize this.documentsMap to an empty Map', () => {
-
-    });
-
     xit('should initialize this.registeredClickablesResizeFunction to null', () => {
 
     });
