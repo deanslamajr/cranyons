@@ -25,6 +25,7 @@ export class CranyonCtrl {
 
   $onInit() {
     this.isActive = false;
+    this.isBlinking = true;
 
     // set cranyon data
     this.imageSrc = this.CranyonService.PICS_DOMAIN + '/' + this.cranyon.image;
@@ -71,6 +72,10 @@ export class CranyonCtrl {
     // draw clickables
     this.scope.$applyAsync(() => this.isImgVisible = value);
   }
+
+  setBlinking(shouldBlink) {
+    this.isBlinking = shouldBlink;
+  }
 }
 
 /**
@@ -92,8 +97,10 @@ const cranyon = {
         class='cranyon'
         cranyon-img='$ctrl.cranyonImg'
         is-active='$ctrl.isActive'
+        is-blinking='$ctrl.isBlinking'
         is-img-visible='$ctrl.isImgVisible' 
         cranyon='$ctrl.cranyon'
+        reset-blinking='$ctrl.setBlinking(true)'
       >
       </pf-clickables>
     </div>

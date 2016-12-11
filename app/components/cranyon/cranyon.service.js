@@ -210,6 +210,9 @@ class CranyonService {
   backAction(id) {
     this.setLoading(true);
 
+    // stop the clickables from blinking
+    this.getActiveCranyonCtrl().setBlinking(false);
+
     const nextCranyonCtrl = this.controllerCacheMap.get(id);
 
     // Next cranyon exists in app cache
