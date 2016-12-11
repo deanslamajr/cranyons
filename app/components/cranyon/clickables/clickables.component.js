@@ -52,6 +52,9 @@ export class ClickablesCtrl {
     if (changes.isBlinking && !changes.isBlinking.currentValue) {
       this.pauseBlink();
     }
+    else if (changes.isBlinking && changes.isBlinking.currentValue) {
+      this.resumeBlink();
+    }
   }
 
   onClickableClick(id, clickables) {
@@ -62,6 +65,12 @@ export class ClickablesCtrl {
 
   pauseBlink() {
     this.ClickablesService.pauseBlink(this.clickables);
+  }
+
+  resumeBlink() {
+    if (this.clickables) {
+      this.ClickablesService.resumeBlink(this.clickables);
+    }
   }
 
   setupClickables() {
