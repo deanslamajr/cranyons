@@ -11,9 +11,11 @@ export class MenuCtrl {
   /**
    * Controller constructor
    */
-  constructor($scope, $element) {
+  constructor($scope, $element, CranyonService) {
     this.scope = $scope;
     this.element = $element;
+
+    this.CranyonService = CranyonService;
 
     this.isActive = false;
   }
@@ -22,7 +24,10 @@ export class MenuCtrl {
     const menuButton = this.element[0].querySelector('.menu-button');
 
     menuButton.addEventListener('click', () => {
-      this.scope.$applyAsync(() => this.isActive = !this.isActive);
+      this.scope.$applyAsync(() => {
+        this.isActive = !this.isActive
+        this.CranyonService.toggleClickablesBlinking();
+      });
     });
   }
 }
@@ -30,7 +35,7 @@ export class MenuCtrl {
 /**
  * Specify dependencies to be injected
  */
-MenuCtrl.$inject = ['$scope', '$element'];
+MenuCtrl.$inject = ['$scope', '$element', 'CranyonService'];
 
 const menu = {
   controller: MenuCtrl,

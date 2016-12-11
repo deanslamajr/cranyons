@@ -226,6 +226,11 @@ class CranyonService {
     }
   }
 
+  toggleClickablesBlinking() {
+    const currentActive = this.getActiveCranyonCtrl();
+    currentActive.setBlinking(!currentActive.isBlinking);
+  }
+
   setLoading(isLoading) {
     if (isLoading) {
       this.loadSpinner.style.visibility = 'visible';
