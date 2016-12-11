@@ -13,7 +13,6 @@ class ClickablesService {
   constructor(DrawService) {
     this.Draw = DrawService;
 
-    this.documentsMap = new Map();
     this.registeredClickablesResizeFunction = null;
   }
 
@@ -93,8 +92,6 @@ class ClickablesService {
     const hostElementID = 'cryn-' + id;
 
     const newDocument = this.Draw.createSVGDocument(hostElementID);
-
-    this.documentsMap.set(id, newDocument);
 
     return newDocument;
   }

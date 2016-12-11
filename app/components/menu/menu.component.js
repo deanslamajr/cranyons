@@ -26,7 +26,7 @@ export class MenuCtrl {
 
     menuButton.addEventListener('click', () => {
       const delay = this.isActive
-        ? 500
+        ? 1000
         : 0;
         
       this.timeout(() => {

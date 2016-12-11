@@ -29,20 +29,10 @@ export class ClickablesCtrl {
 
   $onChanges(changes) {
     if (changes.isImgVisible && changes.isImgVisible.currentValue) {
-      // if clickables associated with this cranyon don't already 
-      // exist for this screen size, create them
-      if (!this.ClickablesService.documentsMap.has(this.cranyon.id)) {
-        if (this.svgDocument) {
-          this.svgDocument.remove();
-        }
-        this.setupClickables();
+      if (this.svgDocument) {
+        this.svgDocument.remove();
       }
-      // if they exist, we need to start them blinking again
-      else {
-        this.ClickablesService.resumeBlink(this.clickables);
-        // set cranyon.isBlinking to true
-        this.resetBlinking();
-      }
+      this.setupClickables();
 
       this.CranyonService.setLoading(false);
 
@@ -58,9 +48,9 @@ export class ClickablesCtrl {
   }
 
   onClickableClick(id, clickables) {
+    this.pauseBlink();
     this.CranyonService.setLoading(true);
     this.CranyonService.clickableClicked(id);
-    this.pauseBlink();
   }
 
   pauseBlink() {
@@ -119,7 +109,7 @@ export class ClickablesCtrl {
     if (this.isActive) {
       // clear Clickables and the SVG document;
       this.svgDocument.remove();
-      this.ClickablesService.documentsMap.clear();
+
       this.setupClickables();
     }
   }

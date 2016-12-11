@@ -57,7 +57,7 @@ body {
 }
 
 .animate-show.ng-hide-add, .animate-show.ng-hide-remove {
-  transition: background 1s, opacity 1s, visibility 1s;
+  transition: background .8s, opacity .8s, visibility .8s;
 }
 
 .animate-show.ng-hide {
