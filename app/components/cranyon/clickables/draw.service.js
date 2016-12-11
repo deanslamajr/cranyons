@@ -5,7 +5,7 @@
 
 import SVG from 'svgjs';
 
-const BLINK_CLASS = 'blinker';
+const PAUSE_CLASS = 'paused';
 
 /**
  * Draw service object for factory call
@@ -81,12 +81,16 @@ class DrawService {
     return set;
   }
 
-  removeBlinkClass(set) {
-    set.removeClass(BLINK_CLASS);
+  addBlinkClass(set) {
+    set.addClass('blinker');
   }
 
-  addBlinkClass(set) {
-    set.addClass(BLINK_CLASS)
+  pauseBlink(set) {
+    set.addClass(PAUSE_CLASS);
+  }
+
+  resumeBlink(set) {
+    set.removeClass(PAUSE_CLASS);
   }
 
   generateShape(points, imgDimensions) {

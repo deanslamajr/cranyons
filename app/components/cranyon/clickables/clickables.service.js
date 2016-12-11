@@ -107,12 +107,12 @@ class ClickablesService {
     );
   }
 
-  removeBlink(clickablesArray) {
-    clickablesArray.map(this.Draw.removeBlinkClass);
+  pauseBlink(clickablesArray) {
+    clickablesArray.map(this.Draw.pauseBlink);
   }
 
-  addBlink(clickablesArray) {
-    clickablesArray.map(this.Draw.addBlinkClass);
+  resumeBlink(clickablesArray) {
+    clickablesArray.map(this.Draw.resumeBlink);
   }
 }
 

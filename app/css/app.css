@@ -16,6 +16,10 @@ body {
   animation-direction: alternate;
 }
 
+.paused {
+  animation-play-state: paused;
+}
+
 @keyframes fade-out {
   100% {
     opacity: 0;
