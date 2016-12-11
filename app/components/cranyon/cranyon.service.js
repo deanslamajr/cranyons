@@ -104,8 +104,8 @@ class CranyonService {
   }
 
   setCranyonCtrlAsActive(controller) {
-    controller.setIsActive(true);
     this.activeCranyonID = controller.cranyon.id;
+    controller.setIsActive(true);
   }
 
   getActiveCranyonCtrl() {
