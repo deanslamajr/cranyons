@@ -28,7 +28,7 @@ export class ClickablesCtrl {
   }
 
   $onChanges(changes) {
-    if (changes.isImgVisible.currentValue) {
+    if (changes.isImgVisible && changes.isImgVisible.currentValue) {
       // if clickables associated with this cranyon don't already 
       // exist for this screen size, create them
       if (!this.ClickablesService.documentsMap.has(this.cranyon.id)) {
@@ -40,18 +40,28 @@ export class ClickablesCtrl {
       // if they exist, we need to start them blinking again
       else {
         this.ClickablesService.addBlink(this.clickables);
+        // set cranyon.isBlinking to true
+        this.resetBlinking();
       }
 
       this.CranyonService.setLoading(false);
 
       this.bindResize();
     }
+
+    if (changes.isBlinking && !changes.isBlinking.currentValue) {
+      this.removeBlink();
+    }
   }
 
   onClickableClick(id, clickables) {
     this.CranyonService.setLoading(true);
     this.CranyonService.clickableClicked(id);
-    this.ClickablesService.removeBlink(clickables);
+    this.removeBlink();
+  }
+
+  removeBlink() {
+    this.ClickablesService.removeBlink(this.clickables);
   }
 
   setupClickables() {
@@ -117,7 +127,9 @@ const clickables = {
       cranyonImg: '<',
       cranyon: '<',
       isImgVisible: '<',
-      isActive: '<'
+      isActive: '<',
+      isBlinking: '<',
+      resetBlinking: '&'
     },
     template: `
       <div 
