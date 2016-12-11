@@ -672,12 +672,15 @@ describe('cranyon.service', () => {
     const idMock = 473829;
 
     const cranyonCtrlMock = { data: 'controller data' };
+    const activeCranyonMock = {
+      setBlinking: noop
+    };
 
     beforeEach(() => {
       cranyonService.setLoading = noop;
-      cranyonService.getActiveCranyonCtrl = noop;
       cranyonService.imageLoaded = noop;
       cranyonService.fetch = noop;
+      cranyonService.getActiveCranyonCtrl = () => activeCranyonMock;
     });
 
     it('should set the loading state to true', () => {
