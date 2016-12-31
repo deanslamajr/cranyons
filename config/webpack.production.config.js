@@ -6,7 +6,13 @@ const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
+// App constants
+const constants = require('./constants');
+
 module.exports = merge(nontest, {
+  output: {
+    publicPath: constants.ASSETS_DOMAIN + '/'
+  },
   plugins: [
     new DedupePlugin(),
     new UglifyJsPlugin({
