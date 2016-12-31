@@ -31,7 +31,7 @@ const plugins = [
     template: __dirname + '/../app/index.ejs',
     filename: '../index.html',
     inject: 'body',
-    baseIconURL: envConfig.get('BASE_ICON_URL'),
+    baseIconURL: constants.BASE_ICON_URL,
     domains: JSON.stringify(constants.PICS_DOMAIN),
     initialCranyonPath: constants.INITIAL_CRANYON.image
   }),

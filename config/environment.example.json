@@ -4,6 +4,5 @@
   "MONGO_PORT": "<mongo DB port#>",
   "MONGO_USERNAME": "<mongo DB username>",
   "MONGO_PASS": "<mongoDB password>",
-  "MONGO_COLLECTION": "<mongoDB collection name>",
-  "BASE_ICON_URL": "<base url that favicon is found at>"
+  "MONGO_COLLECTION": "<mongoDB collection name>"
 }
