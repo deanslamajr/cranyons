@@ -1,7 +1,6 @@
 # build/deploy assets
-public
-deploy
-build_packages
+public/assets
+webpack-assets.json
 
 # npm stuff
 node_modules

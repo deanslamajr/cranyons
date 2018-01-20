@@ -3,10 +3,8 @@ const webpack = require('webpack');
 module.exports = {
   entry: {
     app: './app/app.js',
-    vendor1: [
-      'angular'
-    ],
-    vendor2: [
+    vendor: [
+      'angular',
       'angular-animate',
       'axios',
       'babel-polyfill',
@@ -26,8 +24,8 @@ module.exports = {
 
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({ 
-      minChunks: 2, 
-      names: ['vendor1', 'vendor2'], 
+      minChunks: Infinity, 
+      name: 'vendor', 
       filename: '[name]-[hash].js' 
     })
    ],

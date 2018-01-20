@@ -5,11 +5,14 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "build": "webpack --config config/webpack.dev.config.js --progress --colors --display-error-details",
-    "build:prod": "webpack --config config/webpack.production.config.js --progress --colors --display-error-details",
+    "test": "karma start config/karma.conf.js --no-auto-watch --single-run --reporters spec",
     "prebuild": "rimraf public",
+    "build": "webpack --config config/webpack.dev.config.js --progress --colors --display-error-details",
     "prebuild:prod": "rimraf public",
-    "test": "karma start config/karma.conf.js --no-auto-watch --single-run --reporters spec"
+    "build:prod": "webpack --config config/webpack.production.config.js --progress --colors --display-error-details",
+    "update:index": "babel-node internal/find-and-replace-gzip.js",
+    "upload": "babel-node internal/upload.js",
+    "deploy": "npm run build:prod && npm run update:index && npm run upload"
   },
   "dependencies": {
     "angular": "^1.5.7",
@@ -24,7 +27,10 @@
     "svgjs": "^2.2.5"
   },
   "devDependencies": {
+    "assets-webpack-plugin": "^3.5.1",
+    "aws-sdk": "^2.184.0",
     "axios-mock-adapter": "^1.6.1",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.10.4",
     "babel-eslint": "^6.1.0",
     "babel-loader": "^6.2.4",
@@ -47,10 +53,13 @@
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "^1.8.0",
     "mocha": "^3.0.2",
+    "object.values": "^1.0.4",
     "postcss-cssnext": "^2.7.0",
     "postcss-import": "^8.1.2",
     "postcss-loader": "^0.9.1",
+    "replace-in-file": "^3.1.0",
     "rimraf": "^2.5.2",
+    "s3-upload-stream": "^1.0.7",
     "sinon": "^1.17.5",
     "sinon-as-promised": "^4.0.2",
     "sinon-chai": "^2.8.0",
