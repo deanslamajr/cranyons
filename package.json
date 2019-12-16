@@ -12,7 +12,13 @@
     "build:prod": "webpack --config config/webpack.production.config.js --progress --colors --display-error-details",
     "update:index": "babel-node internal/find-and-replace-gzip.js",
     "upload": "babel-node internal/upload.js",
-    "deploy": "npm run build:prod && npm run update:index && npm run upload"
+    "deploy": "npm run build:prod && npm run update:index && npm run upload",
+
+    "image:build": "sudo docker build -f ../deployment/cranyons/Dockerfile -t deanslamajr/cranyons:\"$(git describe)\" .",
+    "image:promote": "sudo docker push deanslamajr/dslama.net:\"$(git describe)\"",
+    "image:start": "sudo docker run -p 8080:8080/tcp deanslamajr/cranyons:\"$(git describe)\"",
+    "publish": "npm run image:build",
+    "publish:test": "npm version prerelease --preid=g\"$(git rev-parse --short=5 HEAD)\" && npm run publish"
   },
   "dependencies": {
     "angular": "^1.5.7",
@@ -23,7 +29,7 @@
     "ejs": "^2.3.1",
     "express": "^4.12.4",
     "mongojs": "^2.4.0",
-    "nconf": "^0.8.4",
+    "nconf": "^0.8.5",
     "svgjs": "^2.2.5"
   },
   "devDependencies": {

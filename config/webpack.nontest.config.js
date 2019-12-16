@@ -20,10 +20,10 @@ const constants = require('./constants');
 
 // Mapping of build-time replacements for DefinePlugin
 const replacements =  {
-  'DP.PICS_DOMAIN': JSON.stringify(constants.PICS_DOMAIN),
-  'DP.NOT_FOUND_CRANYON': JSON.stringify(constants.NOT_FOUND_CRANYON),
-  'DP.SYSTEM_ERROR_CRANYON': JSON.stringify(constants.SYSTEM_ERROR_CRANYON),
-  'DP.INITIAL_CRANYON': JSON.stringify(constants.INITIAL_CRANYON)
+  'DP.PICS_DOMAIN': constants.PICS_DOMAIN,
+  'DP.NOT_FOUND_CRANYON': constants.NOT_FOUND_CRANYON,
+  'DP.SYSTEM_ERROR_CRANYON': constants.SYSTEM_ERROR_CRANYON,
+  'DP.INITIAL_CRANYON': constants.INITIAL_CRANYON
 }
 
 const plugins = [
@@ -32,8 +32,8 @@ const plugins = [
     filename: '../index.html',
     inject: 'body',
     baseIconURL: constants.BASE_ICON_URL,
-    domains: JSON.stringify(constants.PICS_DOMAIN),
-    initialCranyonPath: constants.INITIAL_CRANYON.image
+    domains: constants.PICS_DOMAIN,
+    initialCranyonPath: JSON.parse(constants.INITIAL_CRANYON).image
   }),
   new ExtractTextPlugin('style-[hash].css'),
   new DefinePlugin(replacements)
