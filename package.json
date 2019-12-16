@@ -1,6 +1,6 @@
 {
   "name": "cranyons",
-  "version": "1.2.0",
+  "version": "1.2.1-0",
   "description": "Choose your own pic adventure Angular 1.x SPA",
   "main": "app.js",
   "scripts": {
@@ -13,7 +13,6 @@
     "update:index": "babel-node internal/find-and-replace-gzip.js",
     "upload": "babel-node internal/upload.js",
     "deploy": "npm run build:prod && npm run update:index && npm run upload",
-
     "image:build": "sudo docker build -f ../deployment/cranyons/Dockerfile -t deanslamajr/cranyons:\"$(git describe)\" .",
     "image:promote": "sudo docker push deanslamajr/dslama.net:\"$(git describe)\"",
     "image:start": "sudo docker run -p 8080:8080/tcp deanslamajr/cranyons:\"$(git describe)\"",
