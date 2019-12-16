@@ -8,7 +8,7 @@ const nconf = require('nconf')
 
 const config = nconf
   .argv()
-  .env('__') // custom delimiter for nested properties
+  .env()
   .file(`${__dirname}/../config/environment.json`)
 
 module.exports = config
