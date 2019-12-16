@@ -4,12 +4,12 @@ import path from 'path'
 import AWS from 'aws-sdk'
 import s3StreamFactory from 's3-upload-stream'
 
-import constants from '../config/constants'
+import env from '../config/config'
 
 const s3Config = {
-  accessKeyId: constants['S3_ACCESS_KEY_ID'],
-  secretAccessKey: constants['S3_SECRET_ACCESS_KEY'],
-  region: constants['S3_REGION']
+  accessKeyId: env['S3_ACCESS_KEY_ID'],
+  secretAccessKey: env['S3_SECRET_ACCESS_KEY'],
+  region: env['S3_REGION']
 }
 
 const s3Stream = s3StreamFactory(new AWS.S3(s3Config))
@@ -17,7 +17,7 @@ const s3Stream = s3StreamFactory(new AWS.S3(s3Config))
 const frontendWorkingDirectory = path.join(__dirname, '..', 'public', 'assets')
 
 const frontendS3Config = {
-  Bucket: constants['FRONTEND_S3_ASSETS_BUCKET'],
+  Bucket: env['FRONTEND_S3_ASSETS_BUCKET'],
   ACL: 'public-read'
 }
 

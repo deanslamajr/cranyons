@@ -1,5 +1,5 @@
 # build/deploy assets
-public/assets
+public
 webpack-assets.json
 .env
 
@@ -12,8 +12,6 @@ rev-manifest.json
 
 # app configurations
 config/environment.json
-config/constants.json
-app/css/constants.css
 
 # project management
 stuph

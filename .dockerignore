@@ -1,0 +1,16 @@
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+
+# Node
+node_modules
+
+# Other
+.editorconfig
+npm-debug.log
+
+# environment
+.env

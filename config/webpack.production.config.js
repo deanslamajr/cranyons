@@ -8,7 +8,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const AssetsPlugin = require('assets-webpack-plugin');
 
 // App constants
-const constants = require('./constants');
+const constants = require('./constants.json');
 
 module.exports = merge(nontest, {
   output: {
