@@ -1,6 +1,7 @@
 # build/deploy assets
 public/assets
 webpack-assets.json
+.env
 
 # npm stuff
 node_modules

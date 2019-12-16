@@ -11,4 +11,4 @@ const config = nconf
   .env('__') // custom delimiter for nested properties
   .file(`${__dirname}/../config/constants.json`)
 
-export default config
+module.exports = config
