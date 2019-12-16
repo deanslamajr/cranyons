@@ -4,7 +4,7 @@
  * @requires nconf
  */
 
-import nconf from 'nconf'
+const nconf = require('nconf')
 
 const config = nconf
   .argv()
