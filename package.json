@@ -1,6 +1,6 @@
 {
   "name": "cranyons",
-  "version": "1.2.1-6",
+  "version": "1.2.1-7",
   "description": "Choose your own pic adventure Angular 1.x SPA",
   "main": "app.js",
   "scripts": {
