@@ -61,5 +61,5 @@
     "HIGH": "https://s3.amazonaws.com/hires.cranyons.com"
   },
   "BASE_ICON_URL": "https://s3.amazonaws.com/icons.cranyons.com",
-  "ASSETS_DOMAIN": "https://s3-us-west-2.amazonaws.com/assets.cranyons.net"
+  "ASSETS_DOMAIN": "https://s3-us-west-2.amazonaws.com/assets.cranyons.com"
 }
