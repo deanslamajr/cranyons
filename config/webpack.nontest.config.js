@@ -32,7 +32,7 @@ const plugins = [
     filename: '../index.html',
     inject: 'body',
     baseIconURL: constants.BASE_ICON_URL,
-    domains: constants.PICS_DOMAIN,
+    domains: JSON.stringify(constants.PICS_DOMAIN),
     initialCranyonPath: constants.INITIAL_CRANYON.image
   }),
   new ExtractTextPlugin('style-[hash].css'),
