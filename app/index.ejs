@@ -17,6 +17,14 @@
         transition: opacity .5s ease-in-out, visibility .5s; 
       }
     </style>
+    <title></title>
+  </head>
+  <body>
+    <div class='load-spinner'></div>
+    <div class='pic-container animate-show'> 
+      <section id='initial-cranyon' class='cranyon initial-disappear'></section>
+    </div>
+    <app></app>
     <script>
       window.cranyons = {
         domains: <%= htmlWebpackPlugin.options.domains %>,
@@ -38,13 +46,5 @@
       };
       window.cranyons.cache[1].src = '<%= htmlWebpackPlugin.options.baseIconURL %>/menu5.svg';
     </script>
-    <title></title>
-  </head>
-  <body>
-    <div class='load-spinner'></div>
-    <div class='pic-container animate-show'> 
-      <section id='initial-cranyon' class='cranyon initial-disappear'></section>
-    </div>
-    <app></app>
   </body>
 </html>
