@@ -13,7 +13,7 @@ const HtmlWebpackPlugin  = require('html-webpack-plugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 
 // App environment variables
-const envConfig = require('../environment-config');
+const envConfig = require('../config');
 
 // App constants
 const constants = require('./constants.json');

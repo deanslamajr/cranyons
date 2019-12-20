@@ -4,7 +4,7 @@ var express   = require('express');
 var mongojs   = require('mongojs');
 var path      = require('path');
 
-var envConfig = require('./environment-config');
+var envConfig = require('./config');
 
 var router = express.Router();
 

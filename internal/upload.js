@@ -4,7 +4,7 @@ import path from 'path'
 import AWS from 'aws-sdk'
 import s3StreamFactory from 's3-upload-stream'
 
-import env from '../config/config'
+import env from '../config'
 
 const s3Config = {
   accessKeyId: env.get('S3_ACCESS_KEY_ID'),
