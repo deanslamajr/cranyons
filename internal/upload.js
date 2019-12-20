@@ -6,6 +6,8 @@ import s3StreamFactory from 's3-upload-stream'
 
 import env from '../config/config'
 
+console.log('\nenv', env)
+
 const s3Config = {
   accessKeyId: env['S3_ACCESS_KEY_ID'],
   secretAccessKey: env['S3_SECRET_ACCESS_KEY'],
