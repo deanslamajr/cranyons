@@ -30,7 +30,6 @@
     "body-parser": "^1.12.4",
     "ejs": "^2.3.1",
     "express": "^4.12.4",
-    "express-http-to-https": "^1.1.4",
     "mongojs": "^2.4.0",
     "nconf": "^0.8.5",
     "svgjs": "^2.2.5"
