@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'production') {
 	app.enable('trust proxy');
 
 	app.use(function(req, res, next){
-		if (req.header('x-forwarded-proto') !== 'https') {
+		if (req.header('x-forwarded-proto') === 'http') {
 			res.redirect('https://' + req.header('host') + req.url);
 		} else{
 			next();
