@@ -1,0 +1,28 @@
+{
+  "name": "cranyons",
+  "version": "2.0.1-ga375f.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "publish": "npm version prerelease --preid=g\"$(git rev-parse --short=5 HEAD)\" && npm run publish:image",
+    "publish:image": "npm run image:build && npm run image:promote",
+    "image:build": "docker build -t us-central1-docker.pkg.dev/development-262721/cranyons/cranyons-app:\"$(git describe)\" .",
+    "image:promote": "docker push us-central1-docker.pkg.dev/development-262721/cranyons/cranyons-app:\"$(git describe)\""
+  },
+  "dependencies": {
+    "react": "^18",
+    "react-dom": "^18",
+    "next": "14.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.1"
+  }
+}
