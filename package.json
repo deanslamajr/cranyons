@@ -1,6 +1,6 @@
 {
   "name": "cranyons",
-  "version": "2.0.1-ga375f.0",
+  "version": "2.0.1-g38137.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
